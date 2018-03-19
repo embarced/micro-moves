@@ -1,2 +1,2 @@
 # micro-moves
-Sources for our Blog series "Micro Moves"
+Quelltexte für die Blog-Serie "Micro Moves".
