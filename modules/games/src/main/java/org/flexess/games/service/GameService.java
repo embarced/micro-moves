@@ -109,7 +109,10 @@ public class GameService {
     }
 
     char otherColour(char colour) {
-        if (colour == 'b') return 'w';
-        else return 'b';
+        if (colour == 'b') {
+            return 'w';
+        } else {
+            return 'b';
+        }
     }
 }
