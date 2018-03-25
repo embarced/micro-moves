@@ -25,7 +25,7 @@ public class Game {
 
     private int fullMoveNumber;
 
-    private GameState gameState;
+    private GameStatus status;
 
     private Date created;
 
@@ -110,12 +110,12 @@ public class Game {
         this.modified = modified;
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public GameStatus getStatus() {
+        return status;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    public void setStatus(GameStatus status) {
+        this.status = status;
     }
 
     @Override

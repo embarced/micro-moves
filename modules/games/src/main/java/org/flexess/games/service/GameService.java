@@ -2,7 +2,7 @@ package org.flexess.games.service;
 
 import org.flexess.games.domain.Game;
 import org.flexess.games.domain.GameRepository;
-import org.flexess.games.domain.GameState;
+import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class GameService {
         game.setCreated(new Date());
         game.setModified(new Date());
 
-        game.setGameState(GameState.OPEN);
+        game.setStatus(GameStatus.OPEN);
 
         gameRepository.save(game);
 
@@ -56,7 +56,7 @@ public class GameService {
 
     public void endGame(Long gameId) {
         Game game = this.getGameById(gameId);
-        game.setGameState(GameState.ENDED);
+        game.setStatus(GameStatus.ENDED);
         game.setModified(new Date());
         gameRepository.save(game);
     }
