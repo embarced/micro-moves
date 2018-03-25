@@ -1,7 +1,5 @@
 package org.flexess.games.service;
 
-
-import org.flexess.games.service.Position;
 import org.junit.Assert;
 import org.junit.Test;
 

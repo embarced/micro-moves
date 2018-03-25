@@ -1,6 +1,5 @@
 package org.flexess.games.service;
 
-import org.flexess.games.service.Square;
 import org.junit.Assert;
 import org.junit.Test;
 
