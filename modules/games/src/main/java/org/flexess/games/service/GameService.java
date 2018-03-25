@@ -1,6 +1,10 @@
 package org.flexess.games.service;
 
-import org.flexess.games.domain.*;
+import org.flexess.games.domain.Game;
+import org.flexess.games.domain.GameRepository;
+import org.flexess.games.domain.GameState;
+import org.flexess.games.domain.Move;
+import org.flexess.games.domain.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
