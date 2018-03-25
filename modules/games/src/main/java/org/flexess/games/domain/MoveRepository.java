@@ -11,5 +11,12 @@ import java.util.List;
  * @author stefanz
  */
 public interface MoveRepository extends CrudRepository<Move, Long> {
+
+    /**
+     * Find moves for a given game.
+     *
+     * @param game the game
+     * @return list of moves
+     */
     public List<Move> findByGame(Game game);
 }
