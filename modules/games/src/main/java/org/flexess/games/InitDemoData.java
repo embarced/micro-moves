@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * Creation of single game for test purposes.
+ * Creation of some games for test purposes.
  */
 @Component
-public class Init {
+public class InitDemoData {
 
     @Autowired
     GameService gameService;
@@ -21,14 +21,14 @@ public class Init {
 
         if (! gameService.getAllGames().iterator().hasNext()) {
 
-            Game foolsMate = gameService.openGame("pinky", "brain");
+            Game foolsMate = gameService.openGame("pinky", 'w');
             gameService.createAndPerformMove(foolsMate.getId(), "f2f3");
             gameService.createAndPerformMove(foolsMate.getId(), "e7e5");
             gameService.createAndPerformMove(foolsMate.getId(), "g2g4");
             gameService.createAndPerformMove(foolsMate.getId(), "d8h4");
             gameService.endGame(foolsMate.getId());
 
-            Game running = gameService.openGame("peter", "mary");
+            gameService.openGame("peter", 'b');
         }
     }
 
