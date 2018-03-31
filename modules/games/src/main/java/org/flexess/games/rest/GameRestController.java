@@ -1,6 +1,5 @@
 package org.flexess.games.rest;
 
-
 import org.flexess.games.domain.Game;
 import org.flexess.games.domain.Move;
 import org.flexess.games.service.GameService;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,15 +29,30 @@ public class GameRestController {
     GameService gameService;
 
     @RequestMapping(value = "/api/games", method = RequestMethod.GET)
-    public Iterable<Game> allGames() {
-        return gameService.getAllGames();
+    public List<GameInfo> allGames() {
+        Iterable<Game> games = gameService.getAllGames();
+        List<GameInfo> infos = new ArrayList<>();
+        for (Game game: games) {
+
+        }
+        return infos;
     }
 
-    @RequestMapping("/api/games/{id}")
-    public ResponseEntity<Game> gameById(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/api/games/{id}", method = RequestMethod.GET)
+    public ResponseEntity<GameDetails> gameById(@PathVariable("id") Long id) {
         Game game = gameService.getGameById(id);
         if (game != null) {
-            return ResponseEntity.ok(game);
+            GameDetails details = new GameDetails();
+            details.setId(game.getId());
+            details.setActiveColour(game.getActiveColour());
+            details.setCreated(game.getCreated());
+            details.setModified(game.getModified());
+            details.setFen(game.getPosition());
+            details.setFullMoveNumber(game.getFullMoveNumber());
+            details.setPlayerBlack(game.getPlayerBlack());
+            details.setPlayerWhite(game.getPlayerWhite());
+
+            return ResponseEntity.ok(details);
         } else {
             return ResponseEntity.status(404).build();
         }
@@ -51,7 +66,7 @@ public class GameRestController {
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
     public ResponseEntity<String> createGame(@RequestBody Game input) {
 
-        Game game = gameService.createGame(input.getPlayerWhite(), input.getPlayerBlack());
+        Game game = gameService.openGame(input.getPlayerWhite(), input.getPlayerBlack());
         LOG.debug(game + " created.");
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

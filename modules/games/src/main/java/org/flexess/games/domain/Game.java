@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+/**
+ * Persistent game data. Contains infos about players, game state (e.g. position). Root aggregate.
+ */
 @Entity
 public class Game {
 
@@ -21,17 +24,22 @@ public class Game {
 
     private Character activeColour;
 
-    private String fen;
+    private String position;
 
     private int fullMoveNumber;
 
     private GameStatus status;
 
-    private Date created;
+    private final Date created;
 
     private Date modified;
 
+    /**
+     * Default Constructor.
+     */
     public Game() {
+        this.created = new Date();
+        modified();
     }
 
     public String getActivePlayer() {
@@ -57,6 +65,7 @@ public class Game {
 
     public void setPlayerWhite(String playerWhite) {
         this.playerWhite = playerWhite;
+        modified();
     }
 
     public String getPlayerBlack() {
@@ -65,14 +74,16 @@ public class Game {
 
     public void setPlayerBlack(String playerBlack) {
         this.playerBlack = playerBlack;
+        modified();
     }
 
-    public String getFen() {
-        return fen;
+    public String getPosition() {
+        return position;
     }
 
-    public void setFen(String fen) {
-        this.fen = fen;
+    public void setPosition(String position) {
+        this.position = position;
+        modified();
     }
 
     public Character getActiveColour() {
@@ -89,6 +100,7 @@ public class Game {
 
     public void setActiveColour(Character activeColour) {
         this.activeColour = activeColour;
+        modified();
     }
 
     // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
@@ -97,17 +109,9 @@ public class Game {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getModified() {
         return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
     }
 
     public GameStatus getStatus() {
@@ -116,6 +120,11 @@ public class Game {
 
     public void setStatus(GameStatus status) {
         this.status = status;
+        modified();
+    }
+
+    private void modified() {
+        this.modified = new Date();
     }
 
     @Override

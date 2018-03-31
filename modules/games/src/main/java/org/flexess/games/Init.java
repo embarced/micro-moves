@@ -21,14 +21,14 @@ public class Init {
 
         if (! gameService.getAllGames().iterator().hasNext()) {
 
-            Game foolsMate = gameService.createGame("pinky", "brain");
+            Game foolsMate = gameService.openGame("pinky", "brain");
             gameService.createAndPerformMove(foolsMate.getId(), "f2f3");
             gameService.createAndPerformMove(foolsMate.getId(), "e7e5");
             gameService.createAndPerformMove(foolsMate.getId(), "g2g4");
             gameService.createAndPerformMove(foolsMate.getId(), "d8h4");
             gameService.endGame(foolsMate.getId());
 
-            Game running = gameService.createGame("peter", "mary");
+            Game running = gameService.openGame("peter", "mary");
         }
     }
 
