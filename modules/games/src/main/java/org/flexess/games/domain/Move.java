@@ -1,8 +1,5 @@
 package org.flexess.games.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,15 +27,27 @@ public class Move {
     @ManyToOne
     private Game game;
 
-    private final Date created;
+    private Date created;
 
-    public Move() {
+    protected Move() {
         this.created = new Date();
     }
 
+    /**
+     * Create a move with a string representation.
+     *
+     * @param text move as a string, e.g. "e2e4"
+     */
     public Move(String text) {
         this();
-        this.text = text;
+        if (text == null || text.length() == 0) {
+            throw new IllegalArgumentException("Given move is null.");
+        }
+        Pattern pattern = Pattern.compile("[a-h][1-8][a-h][1-8][qknr]?");
+        if (pattern.matcher(text).matches()) {
+        this.text = text;} else {
+            throw new IllegalArgumentException(text + " is not a valid move. Use 'e2e4' format.");
+        }
     }
 
     public Long getId() {
@@ -69,11 +78,26 @@ public class Move {
         return created;
     }
 
+    /**
+     * Source square of the move.
+     *
+     * @return name of source square, e.g. "e2"
+     */
+    public String getFrom() {
+        return text.substring(0, 2);
+    }
+
+    /**
+     * Target square of the move.
+     *
+     * @return name of target square, e.g. "e4"
+     */
+    public String getTo() {
+        return text.substring(2, 4);
+    }
 
     @Override
     public String toString() {
         return "Move #" + id + ", " + text;
     }
-
-
 }
