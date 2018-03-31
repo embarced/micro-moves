@@ -1,9 +1,15 @@
 package org.flexess.games.rest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.Date;
 
+/**
+ * Data transfer object for detailed game data.
+ */
+@JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status", "activeColour", "activePlayer",
+        "fullMoveNumber", "fen", "created", "modified"})
 public class GameDetails extends GameInfo {
 
     private Character activeColour;

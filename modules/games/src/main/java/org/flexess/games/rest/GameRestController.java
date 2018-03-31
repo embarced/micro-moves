@@ -33,7 +33,12 @@ public class GameRestController {
         Iterable<Game> games = gameService.getAllGames();
         List<GameInfo> infos = new ArrayList<>();
         for (Game game: games) {
-
+            GameInfo info = new GameInfo();
+            info.setId(game.getId());
+            info.setPlayerWhite(game.getPlayerWhite());
+            info.setPlayerBlack(game.getPlayerBlack());
+            info.setStatus(game.getStatus());
+            infos.add(info);
         }
         return infos;
     }
@@ -51,6 +56,7 @@ public class GameRestController {
             details.setFullMoveNumber(game.getFullMoveNumber());
             details.setPlayerBlack(game.getPlayerBlack());
             details.setPlayerWhite(game.getPlayerWhite());
+            details.setStatus(game.getStatus());
 
             return ResponseEntity.ok(details);
         } else {

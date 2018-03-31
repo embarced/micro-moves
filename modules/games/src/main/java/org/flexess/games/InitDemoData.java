@@ -22,6 +22,7 @@ public class InitDemoData {
         if (! gameService.getAllGames().iterator().hasNext()) {
 
             Game foolsMate = gameService.openGame("pinky", 'w');
+            gameService.enterGame(foolsMate.getId(), "brain");
             gameService.createAndPerformMove(foolsMate.getId(), "f2f3");
             gameService.createAndPerformMove(foolsMate.getId(), "e7e5");
             gameService.createAndPerformMove(foolsMate.getId(), "g2g4");

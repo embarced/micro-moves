@@ -80,6 +80,7 @@ public class GameService {
                 game.setPlayerBlack(secondPlayer);
             }
             game.setStatus(GameStatus.RUNNING);
+            gameRepository.save(game);
         } else {
             throw new IllegalStateException("Not possible to enter this game.");
         }

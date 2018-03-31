@@ -1,9 +1,13 @@
 package org.flexess.games.rest;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.flexess.games.domain.GameStatus;
 
-import java.util.Date;
-
+/**
+ * Data transfer object for game data.
+ */
+@JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status"})
 public class GameInfo {
 
     protected Long id;
