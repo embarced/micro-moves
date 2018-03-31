@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+/**
+ * Persistent move within a game.
+ *
+ * @author stefanz
+ */
 @Entity
 public class Move {
 
@@ -25,14 +30,14 @@ public class Move {
     @ManyToOne
     private Game game;
 
-    private Date created;
+    private final Date created;
 
     public Move() {
         this.created = new Date();
     }
 
     public Move(String text) {
-        super();
+        this();
         this.text = text;
     }
 

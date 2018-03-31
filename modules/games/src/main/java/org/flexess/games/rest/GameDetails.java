@@ -1,6 +1,6 @@
 package org.flexess.games.rest;
 
-import org.flexess.games.domain.GameStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
@@ -40,6 +40,8 @@ public class GameDetails extends GameInfo {
         this.fullMoveNumber = fullMoveNumber;
     }
 
+    // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getCreated() {
         return created;
     }
@@ -48,6 +50,8 @@ public class GameDetails extends GameInfo {
         this.created = created;
     }
 
+    // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getModified() {
         return modified;
     }

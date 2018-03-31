@@ -1,7 +1,5 @@
 package org.flexess.games.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,29 +7,26 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Persistent game data. Contains infos about players, game state (e.g. position). Root aggregate.
+ * Persistent game. Contains infos about players, game state (e.g. position).
+ * Root aggregate, contains moves.
+ *
+ * @author stefanz
  */
 @Entity
 public class Game {
+
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     private String playerWhite;
-
     private String playerBlack;
-
     private Character activeColour;
-
     private String position;
-
     private int fullMoveNumber;
-
     private GameStatus status;
-
     private final Date created;
-
     private Date modified;
 
     /**
@@ -40,19 +35,6 @@ public class Game {
     public Game() {
         this.created = new Date();
         modified();
-    }
-
-    public String getActivePlayer() {
-        String activePlayer = null;
-        switch (getActiveColour()) {
-            case 'w':
-                activePlayer = getPlayerWhite();
-                break;
-            case 'b':
-                activePlayer = getPlayerBlack();
-                break;
-        }
-        return activePlayer;
     }
 
     public Long getId() {
@@ -90,6 +72,11 @@ public class Game {
         return activeColour;
     }
 
+    public void setActiveColour(Character activeColour) {
+        this.activeColour = activeColour;
+        modified();
+    }
+
     public int getFullMoveNumber() {
         return fullMoveNumber;
     }
@@ -98,18 +85,10 @@ public class Game {
         this.fullMoveNumber = fullMoveNumber;
     }
 
-    public void setActiveColour(Character activeColour) {
-        this.activeColour = activeColour;
-        modified();
-    }
-
-    // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getCreated() {
         return created;
     }
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getModified() {
         return modified;
     }
