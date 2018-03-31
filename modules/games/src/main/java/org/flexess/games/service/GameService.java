@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class GameService {
@@ -19,8 +20,15 @@ public class GameService {
     @Autowired
     private MoveRepository moveRepository;
 
+    /**
+     * Get a game by ID.
+     *
+     * @param id ID of the game
+     * @return the game, or null if not found.
+     */
     public Game getGameById(Long id) {
-        return gameRepository.findById(id).get();
+        Optional<Game> game = gameRepository.findById(id);
+        return game.orElse(null);
     }
 
     public Iterable<Game> getAllGames() {
@@ -58,6 +66,20 @@ public class GameService {
         return game;
     }
 
+    public void enterGame(Long gameId, String secondPlayer) {
+        Game game = this.getGameById(gameId);
+        if (game.getStatus() == GameStatus.OPEN) {
+            if (game.getPlayerWhite() == null) {
+                game.setPlayerWhite(secondPlayer);
+            } else {
+                game.setPlayerBlack(secondPlayer);
+            }
+            game.setStatus(GameStatus.RUNNING);
+        } else {
+            throw new IllegalStateException("Not possible to enter this game.");
+        }
+    }
+
     public void endGame(Long gameId) {
         Game game = this.getGameById(gameId);
         game.setStatus(GameStatus.ENDED);
@@ -84,8 +106,8 @@ public class GameService {
     void performMove(Game game, Move move) {
 
         Position pos = new Position(game.getPosition());
-        String from = move.getText().substring(0,2);
-        String to = move.getText().substring(2,4);
+        String from = move.getFrom();
+        String to = move.getTo();
 
         char piece = pos.getPiece(from);
 
@@ -101,6 +123,7 @@ public class GameService {
             throw new IllegalArgumentException("Piece at "+from+" has wrong colour.");
         }
 
+        // perform move, TODO: advanced rules like en passent or castling
         pos.setPiece(from, ' ');
         pos.setPiece(to, piece);
 
