@@ -6,12 +6,17 @@ import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+/**
+ * Business logic for the game service.
+ *
+ * @author stefanz
+ */
+@Service
 public class GameService {
 
     @Autowired
@@ -21,7 +26,7 @@ public class GameService {
     private MoveRepository moveRepository;
 
     /**
-     * Get a game by ID.
+     * Get a game by its ID.
      *
      * @param id ID of the game
      * @return the game, or null if not found.

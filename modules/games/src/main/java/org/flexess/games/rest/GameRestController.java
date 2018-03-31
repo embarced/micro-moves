@@ -66,7 +66,7 @@ public class GameRestController {
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
     public ResponseEntity<String> createGame(@RequestBody Game input) {
 
-        Game game = gameService.openGame(input.getPlayerWhite(), input.getPlayerBlack());
+        Game game = gameService.openGame(input.getPlayerWhite(), 'b');
         LOG.debug(game + " created.");
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
