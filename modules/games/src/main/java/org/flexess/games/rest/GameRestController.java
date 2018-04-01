@@ -29,9 +29,7 @@ public class GameRestController {
     public List<GameInfo> allGames() {
         Iterable<Game> games = gameService.getAllGames();
         List<GameInfo> infos = new ArrayList<>();
-        for (Game game : games) {
-            infos.add(createGameInfo(game));
-        }
+        games.forEach(g -> infos.add(createGameInfo(g)));
         return infos;
     }
 
@@ -45,9 +43,12 @@ public class GameRestController {
         }
     }
 
-    @RequestMapping("/api/games/{id}/moves")
-    public List<Move> movesByGamesId(@PathVariable("id") Long id) {
-        return gameService.getMovesByGameId(id);
+    @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.GET)
+    public List<MoveInfo> movesByGamesId(@PathVariable("id") Long id) {
+        List<Move> moves = gameService.getMovesByGameId(id);
+        List<MoveInfo> moveInfos = new ArrayList<>();
+        moves.forEach(m -> moveInfos.add(createMoveInfo(m)));
+        return moveInfos;
     }
 
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
@@ -61,7 +62,7 @@ public class GameRestController {
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)
     public ResponseEntity<String> createMove(
             @PathVariable("id") Long gameId,
-            @RequestBody MoveBody input) {
+            @RequestBody MoveInfo input) {
 
         Game game = gameService.getGameById(gameId);
         if (game == null) {
@@ -69,7 +70,7 @@ public class GameRestController {
         }
 
         try {
-            gameService.createAndPerformMove(gameId, input.getMove());
+            gameService.createAndPerformMove(gameId, input.getText());
         } catch (IllegalMoveException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -99,24 +100,12 @@ public class GameRestController {
         return details;
     }
 
-    /**
-     * Container for posted moves.
-     */
-    public static class MoveBody {
-
-        private String move;
-
-        public void setMove(String move) {
-            this.move = move;
-        }
-
-        public String getMove() {
-            return move;
-        }
-
-        @Override
-        public String toString() {
-            return "MoveBody, move=" + move;
-        }
+    private MoveInfo createMoveInfo(Move move) {
+        MoveInfo info = new MoveInfo();
+        info.setId(move.getId());
+        info.setNumber(move.getNumber());
+        info.setText(move.getText());
+        info.setCreated(move.getCreated());
+        return info;
     }
 }
