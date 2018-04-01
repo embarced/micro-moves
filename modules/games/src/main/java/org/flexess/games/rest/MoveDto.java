@@ -5,11 +5,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.Date;
 
+/**
+ * Data transfer object (PofEAA, page 401) for move data.
+ *
+ * @author stefanz
+ */
+@JsonPropertyOrder({"moveId", "number", "text", "created"})
+public class MoveDto {
 
-@JsonPropertyOrder({"id", "number", "text", "created"})
-public class MoveInfo {
-
-    private Long id;
+    private Long moveId;
 
     private String text;
 
@@ -17,12 +21,12 @@ public class MoveInfo {
 
     private Date created;
 
-    public Long getId() {
-        return id;
+    public Long getMoveId() {
+        return moveId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMoveId(Long moveId) {
+        this.moveId = moveId;
     }
 
     public String getText() {
@@ -35,7 +39,6 @@ public class MoveInfo {
 
     // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
-
     public Date getCreated() {
         return created;
     }

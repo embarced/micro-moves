@@ -6,11 +6,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Date;
 
 /**
- * Data transfer object for detailed game data.
+ * Data transfer object (PofEAA, page 401) for detailed game data.
+ *
+ * @author stefanz
  */
 @JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status", "activeColour", "activePlayer",
         "fullMoveNumber", "fen", "created", "modified"})
-public class GameDetails extends GameInfo {
+public class GameDetailsDto extends GameInfoDto {
 
     private Character activeColour;
 

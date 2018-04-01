@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.flexess.games.domain.GameStatus;
 
 /**
- * Data transfer object for game data.
+ * Data transfer object (PofEAA, page 401) for essential game data.
  *
  * @author stefanz
  */
-@JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status"})
-public class GameInfo {
+@JsonPropertyOrder({"gameId", "playerWhite", "playerBlack", "status"})
+public class GameInfoDto {
 
-    private Long id;
+    private Long gameId;
 
     private String playerWhite;
 
@@ -19,12 +19,12 @@ public class GameInfo {
 
     private GameStatus status;
 
-    public Long getId() {
-        return id;
+    public Long getGameId() {
+        return gameId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 
     public String getPlayerWhite() {

@@ -23,29 +23,34 @@ public class GameRestController {
     GameService gameService;
 
     @RequestMapping(value = "/api/games", method = RequestMethod.GET)
-    public List<GameInfo> allGames() {
+    public List<GameInfoDto> allGames() {
         Iterable<Game> games = gameService.getAllGames();
-        List<GameInfo> infos = new ArrayList<>();
-        games.forEach(g -> infos.add(createGameInfo(g)));
+        List<GameInfoDto> infos = new ArrayList<>();
+        games.forEach(g -> infos.add(DtoFactory.createGameInfoDto(g)));
         return infos;
     }
 
     @RequestMapping(value = "/api/games/{id}", method = RequestMethod.GET)
-    public ResponseEntity<GameDetails> gameById(@PathVariable("id") Long id) {
+    public ResponseEntity<GameDetailsDto> gameById(@PathVariable("id") Long id) {
         Game game = gameService.getGameById(id);
         if (game != null) {
-            return ResponseEntity.ok(createGameDetails(game));
+            return ResponseEntity.ok(DtoFactory.createGameDetailsDto(game));
         } else {
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.GET)
-    public List<MoveInfo> movesByGamesId(@PathVariable("id") Long id) {
+    public ResponseEntity<List<MoveDto>> movesByGamesId(@PathVariable("id") Long id) {
+        Game game = gameService.getGameById(id);
+        if (game == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         List<Move> moves = gameService.getMovesByGameId(id);
-        List<MoveInfo> moveInfos = new ArrayList<>();
-        moves.forEach(m -> moveInfos.add(createMoveInfo(m)));
-        return moveInfos;
+        List<MoveDto> moveDtos = new ArrayList<>();
+        moves.forEach(m -> moveDtos.add(DtoFactory.createMoveDto(m)));
+        return ResponseEntity.ok(moveDtos);
     }
 
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
@@ -59,7 +64,7 @@ public class GameRestController {
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)
     public ResponseEntity<String> createMove(
             @PathVariable("id") Long gameId,
-            @RequestBody MoveInfo input) {
+            @RequestBody MoveDto input) {
 
         Game game = gameService.getGameById(gameId);
         if (game == null) {
@@ -74,35 +79,4 @@ public class GameRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    private GameInfo createGameInfo(Game game) {
-        GameInfo info = new GameInfo();
-        info.setId(game.getId());
-        info.setPlayerWhite(game.getPlayerWhite());
-        info.setPlayerBlack(game.getPlayerBlack());
-        info.setStatus(game.getStatus());
-        return info;
-    }
-
-    private GameDetails createGameDetails(Game game) {
-        GameDetails details = new GameDetails();
-        details.setId(game.getId());
-        details.setActiveColour(game.getActiveColour());
-        details.setCreated(game.getCreated());
-        details.setModified(game.getModified());
-        details.setFen(game.getPosition());
-        details.setFullMoveNumber(game.getFullMoveNumber());
-        details.setPlayerBlack(game.getPlayerBlack());
-        details.setPlayerWhite(game.getPlayerWhite());
-        details.setStatus(game.getStatus());
-        return details;
-    }
-
-    private MoveInfo createMoveInfo(Move move) {
-        MoveInfo info = new MoveInfo();
-        info.setId(move.getId());
-        info.setNumber(move.getNumber());
-        info.setText(move.getText());
-        info.setCreated(move.getCreated());
-        return info;
-    }
 }
