@@ -56,7 +56,6 @@ public class GameDetails extends GameInfo {
         this.created = created;
     }
 
-    // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getModified() {
         return modified;
