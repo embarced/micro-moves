@@ -20,10 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
 public class GameRestController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(GameRestController.class);
 
     @Autowired
     GameService gameService;
@@ -32,13 +29,8 @@ public class GameRestController {
     public List<GameInfo> allGames() {
         Iterable<Game> games = gameService.getAllGames();
         List<GameInfo> infos = new ArrayList<>();
-        for (Game game: games) {
-            GameInfo info = new GameInfo();
-            info.setId(game.getId());
-            info.setPlayerWhite(game.getPlayerWhite());
-            info.setPlayerBlack(game.getPlayerBlack());
-            info.setStatus(game.getStatus());
-            infos.add(info);
+        for (Game game : games) {
+            infos.add(createGameInfo(game));
         }
         return infos;
     }
@@ -47,18 +39,7 @@ public class GameRestController {
     public ResponseEntity<GameDetails> gameById(@PathVariable("id") Long id) {
         Game game = gameService.getGameById(id);
         if (game != null) {
-            GameDetails details = new GameDetails();
-            details.setId(game.getId());
-            details.setActiveColour(game.getActiveColour());
-            details.setCreated(game.getCreated());
-            details.setModified(game.getModified());
-            details.setFen(game.getPosition());
-            details.setFullMoveNumber(game.getFullMoveNumber());
-            details.setPlayerBlack(game.getPlayerBlack());
-            details.setPlayerWhite(game.getPlayerWhite());
-            details.setStatus(game.getStatus());
-
-            return ResponseEntity.ok(details);
+            return ResponseEntity.ok(createGameDetails(game));
         } else {
             return ResponseEntity.status(404).build();
         }
@@ -72,29 +53,50 @@ public class GameRestController {
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
     public ResponseEntity<String> createGame(@RequestBody Game input) {
 
-        Game game = gameService.openGame(input.getPlayerWhite(), 'b');
-        LOG.debug(game + " created.");
-
+        // TODO: Change type of parameter
+        gameService.openGame(input.getPlayerWhite(), 'b');
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)
     public ResponseEntity<String> createMove(
-                                             @PathVariable("id") Long id,
-                                             @RequestBody MoveBody input) {
+            @PathVariable("id") Long gameId,
+            @RequestBody MoveBody input) {
 
-        Game game = gameService.getGameById(id);
+        Game game = gameService.getGameById(gameId);
         if (game == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         try {
-            Move move = gameService.createAndPerformMove(id, input.getMove());
-            LOG.debug(move + " created.");
+            gameService.createAndPerformMove(gameId, input.getMove());
         } catch (IllegalMoveException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    private GameInfo createGameInfo(Game game) {
+        GameInfo info = new GameInfo();
+        info.setId(game.getId());
+        info.setPlayerWhite(game.getPlayerWhite());
+        info.setPlayerBlack(game.getPlayerBlack());
+        info.setStatus(game.getStatus());
+        return info;
+    }
+
+    private GameDetails createGameDetails(Game game) {
+        GameDetails details = new GameDetails();
+        details.setId(game.getId());
+        details.setActiveColour(game.getActiveColour());
+        details.setCreated(game.getCreated());
+        details.setModified(game.getModified());
+        details.setFen(game.getPosition());
+        details.setFullMoveNumber(game.getFullMoveNumber());
+        details.setPlayerBlack(game.getPlayerBlack());
+        details.setPlayerWhite(game.getPlayerWhite());
+        details.setStatus(game.getStatus());
+        return details;
     }
 
     /**

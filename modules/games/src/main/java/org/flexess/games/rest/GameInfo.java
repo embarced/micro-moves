@@ -5,17 +5,19 @@ import org.flexess.games.domain.GameStatus;
 
 /**
  * Data transfer object for game data.
+ *
+ * @author stefanz
  */
 @JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status"})
 public class GameInfo {
 
-    protected Long id;
+    private Long id;
 
-    protected String playerWhite;
+    private String playerWhite;
 
-    protected String playerBlack;
+    private String playerBlack;
 
-    protected GameStatus status;
+    private GameStatus status;
 
     public Long getId() {
         return id;
