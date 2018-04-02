@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Persistent game. Contains infos about players, game state (e.g. position).
- * Root aggregate, contains moves.
+ * Persistent game. Contains information about players, game state (e.g. position).
+ * Game is a root aggregate, it contains the moves.
  *
  * @author stefanz
  */
@@ -59,19 +59,39 @@ public class Game {
         modified();
     }
 
+    /**
+     * Returns the current game situation.
+     *
+     * @return Position in FEN format.
+     */
     public String getPosition() {
         return position;
     }
 
+    /**
+     * Sets the current game situation.
+     *
+     * @param position Position in FEN format.
+     */
     public void setPosition(String position) {
         this.position = position;
         modified();
     }
 
+    /**
+     * Active colour, black or white.
+     *
+     * @return 'b' for black, 'w' for white.
+     */
     public Character getActiveColour() {
         return activeColour;
     }
 
+    /**
+     * Set the active colour, black or white.
+     *
+     * @param activeColour 'b' for black, 'w' for white.
+     */
     public void setActiveColour(Character activeColour) {
         this.activeColour = activeColour;
         modified();
@@ -83,14 +103,7 @@ public class Game {
 
     public void setFullMoveNumber(int fullMoveNumber) {
         this.fullMoveNumber = fullMoveNumber;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public Date getModified() {
-        return modified;
+        modified();
     }
 
     public GameStatus getStatus() {
@@ -104,6 +117,14 @@ public class Game {
 
     private void modified() {
         this.modified = new Date();
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getModified() {
+        return modified;
     }
 
     @Override
