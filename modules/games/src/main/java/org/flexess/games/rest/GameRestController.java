@@ -1,6 +1,7 @@
 package org.flexess.games.rest;
 
 import org.flexess.games.domain.Game;
+import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.service.GameService;
 import org.flexess.games.service.IllegalMoveException;
@@ -105,6 +106,38 @@ public class GameRestController {
         return new ResponseEntity<String>(game + " created.", HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/api/games", method = RequestMethod.PUT)
+    public ResponseEntity<String> enterGame(@RequestBody GameInfoDto input) {
+
+        Game game = gameService.getGameById(input.getGameId());
+        if (game == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        if (game.getStatus() != GameStatus.OPEN) {
+            return new ResponseEntity<String>("Game not open.", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        if (game.getPlayerWhite() == null && input.getPlayerWhite() != null) {
+            gameService.enterGame(game.getId(), input.getPlayerWhite());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        }
+
+        if (game.getPlayerBlack() == null && input.getPlayerBlack() != null) {
+            gameService.enterGame(game.getId(), input.getPlayerBlack());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        }
+
+        return new ResponseEntity<String>("Game not entered.", HttpStatus.UNPROCESSABLE_ENTITY);
+
+    }
+
+    /**
+     * Create and perform a move.
+     *
+     * @param gameId ID of the game
+     * @param input move to perform
+     */
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)
     public ResponseEntity<String> createMove(
             @PathVariable("id") Long gameId,
