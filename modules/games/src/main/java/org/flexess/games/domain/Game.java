@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
- * Persistent game. Contains information about players, game state (e.g. position).
+ * Persistent game. Contains information about players, game state (e.g. position), status (e.g. RUNNING).
  * Game is a root aggregate, it contains the moves.
  *
  * @author stefanz
@@ -97,32 +97,58 @@ public class Game {
         modified();
     }
 
+    /**
+     * Number of full moves, incremented after each black move.
+     *
+     * @return full move number.
+     */
     public int getFullMoveNumber() {
         return fullMoveNumber;
     }
 
+    /**
+     * Set the number of full moves, incremented after each black move.
+     *
+     * @param fullMoveNumber full move number, starts with 1
+     */
     public void setFullMoveNumber(int fullMoveNumber) {
         this.fullMoveNumber = fullMoveNumber;
         modified();
     }
 
+    /**
+     * Game status, e.g. OPEN, RUNNING ...
+     *
+     * @return the game status
+     */
     public GameStatus getStatus() {
         return status;
     }
 
+    /**
+     * Set the game status, e.g. OPEN, RUNNING ...
+     *
+     * @param status the game status
+     */
     public void setStatus(GameStatus status) {
         this.status = status;
         modified();
     }
 
-    private void modified() {
-        this.modified = new Date();
-    }
-
+    /**
+     * When the game has been created.
+     *
+     * @return date and time
+     */
     public Date getCreated() {
         return created;
     }
 
+    /**
+     * When the game has been modifies the last time.
+     *
+     * @return date and time
+     */
     public Date getModified() {
         return modified;
     }
@@ -131,4 +157,9 @@ public class Game {
     public String toString() {
         return "Game #" +id;
     }
+
+    private void modified() {
+        this.modified = new Date();
+    }
+
 }
