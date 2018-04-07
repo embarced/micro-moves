@@ -16,12 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * REST API for games and moves.
+ *
+ * @author stefanz
+ */
 @RestController
 public class GameRestController {
 
     @Autowired
     GameService gameService;
 
+    /**
+     * Provides essential information for all games.
+     */
     @RequestMapping(value = "/api/games", method = RequestMethod.GET)
     public List<GameInfoDto> allGames() {
         Iterable<Game> games = gameService.getAllGames();
@@ -30,6 +38,11 @@ public class GameRestController {
         return infos;
     }
 
+    /**
+     * Provides detailed information for a single game.
+     *
+     * @param id id the game.
+     */
     @RequestMapping(value = "/api/games/{id}", method = RequestMethod.GET)
     public ResponseEntity<GameDetailsDto> gameById(@PathVariable("id") Long id) {
         Game game = gameService.getGameById(id);
@@ -40,6 +53,11 @@ public class GameRestController {
         }
     }
 
+    /**
+     * Provides the moves of a game.
+     *
+     * @param id game ID
+     */
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.GET)
     public ResponseEntity<List<MoveDto>> movesByGamesId(@PathVariable("id") Long id) {
         Game game = gameService.getGameById(id);
@@ -53,12 +71,38 @@ public class GameRestController {
         return ResponseEntity.ok(moveDtos);
     }
 
+    /**
+     * Create a new game.
+     *
+     * @param input At least one of the two players must be given.
+     */
     @RequestMapping(value = "/api/games", method = RequestMethod.POST)
-    public ResponseEntity<String> createGame(@RequestBody Game input) {
+    public ResponseEntity<String> createGame(@RequestBody GameInfoDto input) {
 
-        // TODO: Change type of parameter
-        gameService.openGame(input.getPlayerWhite(), 'b');
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        String black = input.getPlayerBlack();
+        String white = input.getPlayerWhite();
+
+        Game game = null;
+
+        if (black == null & white == null) {
+            return new ResponseEntity<String>("No player given.", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        if (black != null & white == null) {
+            game = gameService.openGame(black, 'b');
+        }
+
+        if (black == null & white != null) {
+            game = gameService.openGame(white, 'w');
+
+        }
+
+        if (black != null & white != null) {
+            game = gameService.openGame(white, 'w');
+            gameService.enterGame(game.getId(), black);
+        }
+
+        return new ResponseEntity<String>(game + " created.", HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)

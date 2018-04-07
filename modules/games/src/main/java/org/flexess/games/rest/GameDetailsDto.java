@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author stefanz
  */
-@JsonPropertyOrder({"id", "playerWhite", "playerBlack", "status", "activeColour", "activePlayer",
+@JsonPropertyOrder({"gameId", "playerWhite", "playerBlack", "status", "activeColour", "activePlayer",
         "fullMoveNumber", "fen", "created", "modified"})
 public class GameDetailsDto extends GameInfoDto {
 
