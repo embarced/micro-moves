@@ -17,18 +17,24 @@ public class InitDemoData {
     @Autowired
     GameService gameService;
 
+    /**
+     * Create some game data, if no games available.
+     */
     @PostConstruct
     public void createDemoData() {
 
-        if (! gameService.getAllGames().iterator().hasNext()) {
+        if (!gameService.getAllGames().iterator().hasNext()) {
 
+            // Fools mate. See https://en.wikipedia.org/wiki/Fool%27s_mate
+            //
             Game foolsMate = gameService.openGame("pinky", 'w');
-            gameService.enterGame(foolsMate.getId(), "brain");
-            gameService.createAndPerformMove(foolsMate.getId(), "f2f3");
-            gameService.createAndPerformMove(foolsMate.getId(), "e7e5");
-            gameService.createAndPerformMove(foolsMate.getId(), "g2g4");
-            gameService.createAndPerformMove(foolsMate.getId(), "d8h4");
-            gameService.endGame(foolsMate.getId(), GameResult.BLACK_WINS);
+            Long foolsMateId = foolsMate.getId();
+            gameService.enterGame(foolsMateId, "brain");
+            gameService.createAndPerformMove(foolsMateId, "f2f3");
+            gameService.createAndPerformMove(foolsMateId, "e7e5");
+            gameService.createAndPerformMove(foolsMateId, "g2g4");
+            gameService.createAndPerformMove(foolsMateId, "d8h4");
+            gameService.endGame(foolsMateId, GameResult.BLACK_WINS);
 
             gameService.openGame("peter", 'b');
         }
