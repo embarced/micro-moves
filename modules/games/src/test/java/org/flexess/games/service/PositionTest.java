@@ -54,4 +54,14 @@ public class PositionTest {
         Assert.assertEquals('r', pos.getPiece("a8"));
         Assert.assertEquals(' ', pos.getPiece("f5"));
     }
+
+    @Test
+    public void toNumber() {
+
+        Position pos = new Position();
+
+        Assert.assertEquals(0, pos.squareNametoNumber("a8"));
+        Assert.assertEquals(7, pos.squareNametoNumber("h8"));
+        Assert.assertEquals(63, pos.squareNametoNumber("h1"));
+    }
 }

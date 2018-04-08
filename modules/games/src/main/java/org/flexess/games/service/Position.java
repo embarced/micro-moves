@@ -1,11 +1,16 @@
 package org.flexess.games.service;
 
+import java.util.regex.Pattern;
+
 /**
  * Represents the game situation. Pieces on the board, active colour etc.
  *
  * @author stefanz
  */
 public class Position {
+
+    static final String LINE_NAMES = "abcdefgh";
+
 
     private char board[][];
     private char activeColour;
@@ -73,7 +78,7 @@ public class Position {
     /**
      * Set active colour.
      *
-     * @param activeColour
+     * @param activeColour the colour to move
      */
     public void setActiveColour(char activeColour) {
         this.activeColour = activeColour;
@@ -126,7 +131,7 @@ public class Position {
     /**
      * Set number of the full move.
      *
-     * @param fullmoveNumber
+     * @param fullmoveNumber the number
      */
     public void setFullmoveNumber(int fullmoveNumber) {
         this.fullmoveNumber = fullmoveNumber;
@@ -139,7 +144,7 @@ public class Position {
      * @return piece at this square, or ' ' if empty.
      */
     public char getPiece(String square) {
-        int squareNo = Square.toNumber(square);
+        int squareNo = squareNametoNumber(square);
         return board[squareNo/8][squareNo%8];
     }
 
@@ -150,7 +155,7 @@ public class Position {
      * @param piece piece, e.g. 'Q' for white queen.
      */
     public void setPiece(String square, char piece) {
-        int squareNo = Square.toNumber(square);
+        int squareNo = squareNametoNumber(square);
         board[squareNo/8][squareNo%8] = piece;
     }
 
@@ -204,5 +209,17 @@ public class Position {
         return result.toString();
     }
 
+    int squareNametoNumber(String name) {
+        int result;
+        Pattern pattern = Pattern.compile("[a-h][1-8]");
+        if (pattern.matcher(name).matches()) {
+            int row  = Integer.parseInt(name.substring(1));
+            char  line = name.charAt(0);
+            result = LINE_NAMES.indexOf(line) + (8-row) * 8;
+        } else {
+            throw new IllegalArgumentException(name + " is not a valid square name.");
+        }
+        return result;
+    }
 
 }
