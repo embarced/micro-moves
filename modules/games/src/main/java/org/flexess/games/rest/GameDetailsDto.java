@@ -1,7 +1,9 @@
 package org.flexess.games.rest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.flexess.games.domain.GameStatus;
 
 import java.util.Date;
 
@@ -10,15 +12,14 @@ import java.util.Date;
  *
  * @author stefanz
  */
-@JsonPropertyOrder({"gameId", "playerWhite", "playerBlack", "status", "activeColour", "activePlayer",
-        "fullMoveNumber", "fen", "created", "modified"})
+@JsonPropertyOrder({"gameId", "playerWhite", "playerBlack", "status", "result", "activeColour", "activePlayer", "fen", "created", "modified"})
 public class GameDetailsDto extends GameInfoDto {
 
     private Character activeColour;
 
-    private String fen;
+    private String result;
 
-    private int fullMoveNumber;
+    private String fen;
 
     private Date created;
 
@@ -40,14 +41,6 @@ public class GameDetailsDto extends GameInfoDto {
         this.fen = fen;
     }
 
-    public int getFullMoveNumber() {
-        return fullMoveNumber;
-    }
-
-    public void setFullMoveNumber(int fullMoveNumber) {
-        this.fullMoveNumber = fullMoveNumber;
-    }
-
     // see https://www.firstfewlines.com/post/spring-boot-json-format-date-using-jsonserialize-and-jsonformat/
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
     public Date getCreated() {
@@ -67,15 +60,27 @@ public class GameDetailsDto extends GameInfoDto {
         this.modified = modified;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getActivePlayer() {
         String activePlayer = null;
-        switch (getActiveColour()) {
-            case 'w':
-                activePlayer = getPlayerWhite();
-                break;
-            case 'b':
-                activePlayer = getPlayerBlack();
-                break;
+        if (getStatus() == GameStatus.RUNNING) {
+            switch (getActiveColour()) {
+                case 'w':
+                    activePlayer = getPlayerWhite();
+                    break;
+                case 'b':
+                    activePlayer = getPlayerBlack();
+                    break;
+            }
         }
         return activePlayer;
     }

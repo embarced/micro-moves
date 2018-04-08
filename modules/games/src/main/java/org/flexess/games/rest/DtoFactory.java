@@ -27,10 +27,24 @@ class DtoFactory {
         details.setCreated(game.getCreated());
         details.setModified(game.getModified());
         details.setFen(game.getPosition());
-        details.setFullMoveNumber(game.getFullMoveNumber());
         details.setPlayerBlack(game.getPlayerBlack());
         details.setPlayerWhite(game.getPlayerWhite());
         details.setStatus(game.getStatus());
+
+        if (game.getResult() != null) {
+            switch (game.getResult()) {
+                case WHITE_WINS:
+                    details.setResult("1-0");
+                    break;
+                case BLACK_WINS:
+                    details.setResult("0-1");
+                    break;
+                case DRAW:
+                    details.setResult("½-½");
+                    break;
+            }
+        }
+
         return details;
     }
 

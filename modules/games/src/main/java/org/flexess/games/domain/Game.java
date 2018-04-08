@@ -1,5 +1,6 @@
 package org.flexess.games.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +18,18 @@ public class Game {
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String playerWhite;
     private String playerBlack;
+
+    @Column(length = 1)
     private Character activeColour;
     private String position;
-    private int fullMoveNumber;
     private GameStatus status;
+    private GameResult result;
+
     private final Date created;
     private Date modified;
 
@@ -98,25 +102,6 @@ public class Game {
     }
 
     /**
-     * Number of full moves, incremented after each black move.
-     *
-     * @return full move number.
-     */
-    public int getFullMoveNumber() {
-        return fullMoveNumber;
-    }
-
-    /**
-     * Set the number of full moves, incremented after each black move.
-     *
-     * @param fullMoveNumber full move number, starts with 1
-     */
-    public void setFullMoveNumber(int fullMoveNumber) {
-        this.fullMoveNumber = fullMoveNumber;
-        modified();
-    }
-
-    /**
      * Game status, e.g. OPEN, RUNNING ...
      *
      * @return the game status
@@ -132,6 +117,26 @@ public class Game {
      */
     public void setStatus(GameStatus status) {
         this.status = status;
+        modified();
+    }
+
+    /**
+     * The game result, if game ended.
+     *
+     * @return the result, or null if not ended yet
+     */
+    public GameResult getResult() {
+        return result;
+    }
+
+
+    /**
+     * Set the game result.
+     *
+     * @param result the result
+     */
+    public void setResult(GameResult result) {
+        this.result = result;
         modified();
     }
 
@@ -155,7 +160,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game #" +id;
+        return "Game #" + id + " (" + playerWhite + "-" + playerBlack + ")";
     }
 
     private void modified() {

@@ -1,6 +1,7 @@
 package org.flexess.games;
 
 import org.flexess.games.domain.Game;
+import org.flexess.games.domain.GameResult;
 import org.flexess.games.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class InitDemoData {
             gameService.createAndPerformMove(foolsMate.getId(), "e7e5");
             gameService.createAndPerformMove(foolsMate.getId(), "g2g4");
             gameService.createAndPerformMove(foolsMate.getId(), "d8h4");
-            gameService.endGame(foolsMate.getId());
+            gameService.endGame(foolsMate.getId(), GameResult.BLACK_WINS);
 
             gameService.openGame("peter", 'b');
         }

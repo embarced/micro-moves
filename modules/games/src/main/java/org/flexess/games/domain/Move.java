@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class Move {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String text;

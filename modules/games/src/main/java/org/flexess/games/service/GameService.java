@@ -2,11 +2,13 @@ package org.flexess.games.service;
 
 import org.flexess.games.domain.Game;
 import org.flexess.games.domain.GameRepository;
+import org.flexess.games.domain.GameResult;
 import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import java.util.Optional;
  * @author stefanz
  */
 @Service
+@Transactional
 public class GameService {
 
     @Autowired
@@ -45,6 +48,13 @@ public class GameService {
         return moveRepository.findByGame(game);
     }
 
+    /**
+     * Open a new game. Status is OPEN afterwards -- it waits for the second player.
+     *
+     * @param player first player in the game
+     * @param colour colour of the given player, 'w' for white, 'b' for black.
+     * @return game created.
+     */
     public Game openGame(String player, char colour) {
 
         Game game = new Game();
@@ -62,8 +72,6 @@ public class GameService {
         Position pos = new Position();
         game.setPosition(pos.toString());
         game.setActiveColour(pos.getActiveColour());
-        game.setFullMoveNumber(pos.getFullmoveNumber());
-
         game.setStatus(GameStatus.OPEN);
 
         gameRepository.save(game);
@@ -71,6 +79,12 @@ public class GameService {
         return game;
     }
 
+    /**
+     * Enter an open game. Afterwards the status of the game is RUNNING.
+     *
+     * @param gameId       game ID
+     * @param secondPlayer second player.
+     */
     public void enterGame(Long gameId, String secondPlayer) {
         Game game = this.getGameById(gameId);
         if (game.getStatus() == GameStatus.OPEN) {
@@ -86,13 +100,28 @@ public class GameService {
         }
     }
 
-    public void endGame(Long gameId) {
+    /**
+     * End a given game.
+     *
+     * @param gameId game ID.
+     * @param result game result
+     */
+    public void endGame(Long gameId, GameResult result) {
         Game game = this.getGameById(gameId);
         game.setStatus(GameStatus.ENDED);
+        game.setResult(result);
         gameRepository.save(game);
     }
 
-    public Move createAndPerformMove(Long gameId, String sMove) {
+    /**
+     * Create and perform a move.
+     *
+     * @param gameId game ID
+     * @param sMove  move as String, e.g. "e2e4"
+     * @return move object
+     * @throws IllegalMoveException move is not valid according to rules.
+     */
+    public Move createAndPerformMove(Long gameId, String sMove) throws IllegalMoveException {
 
         Move move = new Move(sMove);
         Game game = this.getGameById(gameId);
@@ -118,15 +147,15 @@ public class GameService {
         char piece = pos.getPiece(from);
 
         if (piece == ' ') {
-            throw new IllegalArgumentException("Square "+from+" is empty.");
+            throw new IllegalMoveException("Square " + from + " is empty.");
         }
 
         if (Character.isUpperCase(piece) && game.getActiveColour() == 'b') {
-            throw new IllegalArgumentException("Piece at "+from+" has wrong colour.");
+            throw new IllegalMoveException("Piece at " + from + " has wrong colour.");
         }
 
         if (Character.isLowerCase(piece) && game.getActiveColour() == 'w') {
-            throw new IllegalArgumentException("Piece at "+from+" has wrong colour.");
+            throw new IllegalMoveException("Piece at " + from + " has wrong colour.");
         }
 
         // perform move, TODO: advanced rules like en passent or castling
@@ -140,11 +169,10 @@ public class GameService {
         pos.setActiveColour(otherColour(pos.getActiveColour()));
 
         game.setPosition(pos.toString());
-        game.setFullMoveNumber(pos.getFullmoveNumber());
         game.setActiveColour(pos.getActiveColour());
     }
 
-    char otherColour(char colour) {
+    private char otherColour(char colour) {
         if (colour == 'b') {
             return 'w';
         } else {

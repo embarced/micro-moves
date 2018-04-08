@@ -1,5 +1,6 @@
 package org.flexess.games.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.flexess.games.domain.GameStatus;
 
@@ -27,6 +28,7 @@ public class GameInfoDto {
         this.gameId = gameId;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPlayerWhite() {
         return playerWhite;
     }
@@ -35,6 +37,7 @@ public class GameInfoDto {
         this.playerWhite = playerWhite;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getPlayerBlack() {
         return playerBlack;
     }
