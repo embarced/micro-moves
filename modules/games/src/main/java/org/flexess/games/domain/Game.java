@@ -160,7 +160,9 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game #" + id + " (" + playerWhite + "-" + playerBlack + ")";
+        String pWhite = (playerWhite != null) ? playerWhite : "???";
+        String pBlack = (playerBlack != null) ? playerBlack : "???";
+        return "Game #" + id + " (" + pWhite + "-" + pBlack + ")";
     }
 
     private void modified() {
