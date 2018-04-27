@@ -31,7 +31,7 @@ def create_image (width, height, color='white'):
     :param width: image width
     :param height: image height
     :param color: background color
-    :return:
+    :return: the image
     """
 
     image = PIL.Image.new("RGBA", (width, height), color)
@@ -39,6 +39,17 @@ def create_image (width, height, color='white'):
 
 
 def draw_board (image, square_size, start_x, start_y, light=BOARD_COLOR_LIGHT, dark=BOARD_COLOR_DARK):
+    """
+    Draw a chequered 8x8 chess board into a given images.
+
+    :param image: target image
+    :param square_size: size of a single square (width and height)
+    :param start_x: x position of upper left corner of board
+    :param start_y: y position of upper left corner of board
+    :param light: light square color
+    :param dark: dark square color
+    """
+
     img_draw = PIL.ImageDraw.Draw(image)
     x = 0
     y = 0
@@ -56,6 +67,15 @@ def draw_board (image, square_size, start_x, start_y, light=BOARD_COLOR_LIGHT, d
 
 
 def draw_key(image, square_size, start_x, start_y):
+    """
+    Draw a key (a..h, 1..8) for the squares into a given images.
+
+    :param image: target image
+    :param square_size: size of a single square (width and height)
+    :param start_x: x position of upper left corner of board
+    :param start_y: y position of upper left corner of board
+    """
+
     font_size = int(square_size / 2.5)
     font_dy = int((start_y - font_size) / 2)
     font_dx = int((start_x - font_size/2)/2)
@@ -86,10 +106,10 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
     """
     Draws chess pieces into a given image.
 
-    :param image: target images
+    :param image: target image
     :param square_size: size of a single square (width and height)
-    :param start_x: x position of upper left corner of squares
-    :param start_y: y position of upper left corner of squares
+    :param start_x: x position of upper left corner of board
+    :param start_y: y position of upper left corner of board
     :param pieces: pieces on the bord (1st FEN group)
     """
 
@@ -123,8 +143,6 @@ def draw_diagram_for_fen(fen):
 
     groups = fen.split(" ")
     pieces = groups[0]
-
     draw_pieces(image, SQUARE_SIZE, BORDER_SIZE, BORDER_SIZE, pieces)
 
     return image
-
