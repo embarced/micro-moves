@@ -20,9 +20,9 @@ def board_png():
 
     image = draw.draw_diagram_for_fen(fen)
 
-    bytes = io.BytesIO()
-    image.save(bytes, format='png')
-    response = flask.make_response(bytes.getvalue())
+    image_bytes = io.BytesIO()
+    image.save(image_bytes, format='png')
+    response = flask.make_response(image_bytes.getvalue())
     response.mimetype = 'image/png'
 
     return response
