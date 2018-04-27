@@ -13,9 +13,11 @@ BOARD_COLOR_DARK = 'lightgray'
 BOARD_COLOR_BORDER = 'darkgray'
 BOARD_COLOR_KEY = 'white'
 
+
 FONT_PATH = 'fonts/'
 IMAGE_PATH = 'images/pieces/32'
 ALL_PIECES = ( 'bb', 'bk', 'bn', 'bp', 'bq', 'br', 'wb', 'wk', 'wn', 'wp', 'wq', 'wr')
+
 
 piece_images = {}
 for piece in ALL_PIECES:
@@ -102,6 +104,14 @@ def draw_key(image, square_size, start_x, start_y):
         pos_x += square_size
 
 
+def piece_image_for_letter(c):
+    if c.islower():
+        piece = 'b' + c
+    else:
+        piece = 'w' + c.lower()
+    piece_images.get(piece)
+
+
 def draw_pieces(image, square_size, start_x, start_y, pieces):
     """
     Draws chess pieces into a given image.
@@ -121,14 +131,10 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
             if c.isdigit():
                 line_no += int(c)
             else:
-                piece = 'w' + c.lower()
-                if c.islower():
-                    piece = 'b' + c
-                piece_image = piece_images.get(piece)
+                piece_image = piece_image_for_letter(piece)
                 pos = (start_x + square_size * line_no, start_y + square_size * row_no)
                 image.paste(piece_image, pos, piece_image)
                 line_no += 1
-
         row_no += 1
         line_no = 0
 
