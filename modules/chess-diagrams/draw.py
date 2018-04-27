@@ -105,11 +105,18 @@ def draw_key(image, square_size, start_x, start_y):
 
 
 def piece_image_for_letter(c):
+    """
+    Return a graphic representation for the given piece.
+    'K' is a white king, 'p' is a black pawn (lower case means black)
+    :param c:
+    :return: the image for the piece
+    """
+
     if c.islower():
         piece = 'b' + c
     else:
         piece = 'w' + c.lower()
-    piece_images.get(piece)
+    return piece_images.get(piece)
 
 
 def draw_pieces(image, square_size, start_x, start_y, pieces):
@@ -131,7 +138,7 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
             if c.isdigit():
                 line_no += int(c)
             else:
-                piece_image = piece_image_for_letter(piece)
+                piece_image = piece_image_for_letter(c)
                 pos = (start_x + square_size * line_no, start_y + square_size * row_no)
                 image.paste(piece_image, pos, piece_image)
                 line_no += 1
@@ -140,7 +147,10 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
 
 
 def draw_diagram_for_fen(fen):
-    """ Creates an image for the given FEN position."""
+    """
+    Creates an image for the given FEN position.
+    :param fen: game position in FEN notation as string
+    """
 
     image = create_image(BOARD_SIZE, BOARD_SIZE, color=BOARD_COLOR_BORDER)
 
