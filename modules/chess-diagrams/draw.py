@@ -85,22 +85,22 @@ def draw_key(image, square_size, start_x, start_y):
     font = PIL.ImageFont.truetype(FONT_PATH + 'arial.ttf', font_size)
     img_draw = PIL.ImageDraw.Draw(image)
 
-    numbers = "87654321"
+    rank_names = "87654321"
     pos_x_1 = font_dx
     pos_x_2 = font_dx + 8.5 * square_size
     pos_y = start_y + int(square_size / 6)
-    for number in numbers:
-        img_draw.text((pos_x_1, pos_y), number, font=font, fill=BOARD_COLOR_KEY)
-        img_draw.text((pos_x_2, pos_y), number, font=font, fill=BOARD_COLOR_KEY)
+    for rank in rank_names:
+        img_draw.text((pos_x_1, pos_y), rank, font=font, fill=BOARD_COLOR_KEY)
+        img_draw.text((pos_x_2, pos_y), rank, font=font, fill=BOARD_COLOR_KEY)
         pos_y += square_size
 
-    letters = "abcdefgh"
+    file_names = "abcdefgh"
     pos_x = start_x + int (square_size/4) + font_dx
     pos_y_1 = font_dy
     pos_y_2 = start_y + 8 * square_size + font_dy
-    for letter in letters:
-        img_draw.text((pos_x, pos_y_1), letter, font=font, fill=BOARD_COLOR_KEY)
-        img_draw.text((pos_x, pos_y_2), letter, font=font, fill=BOARD_COLOR_KEY)
+    for file in file_names:
+        img_draw.text((pos_x, pos_y_1), file, font=font, fill=BOARD_COLOR_KEY)
+        img_draw.text((pos_x, pos_y_2), file, font=font, fill=BOARD_COLOR_KEY)
         pos_x += square_size
 
 
@@ -130,20 +130,20 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
     :param pieces: pieces on the bord (1st FEN group)
     """
 
-    rows = pieces.split('/')
-    row_no = 0
-    line_no  = 0
-    for row in rows:
-        for c in row:
-            if c.isdigit():
-                line_no += int(c)
+    ranks = pieces.split('/')
+    rank_no = 0
+    file_no  = 0
+    for rank in ranks:
+        for character in rank:
+            if character.isdigit():
+                file_no += int(character)
             else:
-                piece_image = piece_image_for_letter(c)
-                pos = (start_x + square_size * line_no, start_y + square_size * row_no)
+                piece_image = piece_image_for_letter(character)
+                pos = (start_x + square_size * file_no, start_y + square_size * rank_no)
                 image.paste(piece_image, pos, piece_image)
-                line_no += 1
-        row_no += 1
-        line_no = 0
+                file_no += 1
+        rank_no += 1
+        file_no = 0
 
 
 def draw_diagram_for_fen(fen):
@@ -157,8 +157,8 @@ def draw_diagram_for_fen(fen):
     draw_board(image, SQUARE_SIZE, BORDER_SIZE, BORDER_SIZE, light=BOARD_COLOR_LIGHT, dark=BOARD_COLOR_DARK)
     draw_key(image, SQUARE_SIZE, BORDER_SIZE, BORDER_SIZE)
 
-    groups = fen.split(" ")
-    pieces = groups[0]
+    fen_groups = fen.split(" ")
+    pieces = fen_groups[0]
     draw_pieces(image, SQUARE_SIZE, BORDER_SIZE, BORDER_SIZE, pieces)
 
     return image
