@@ -25,6 +25,15 @@ for piece in ALL_PIECES:
 
 
 def create_image (width, height, color='white'):
+    """
+    Creates an empty image.
+
+    :param width: image width
+    :param height: image height
+    :param color: background color
+    :return:
+    """
+
     image = PIL.Image.new("RGBA", (width, height), color)
     return image
 
@@ -74,6 +83,16 @@ def draw_key(image, square_size, start_x, start_y):
 
 
 def draw_pieces(image, square_size, start_x, start_y, pieces):
+    """
+    Draws chess pieces into a given image.
+
+    :param image: target images
+    :param square_size: size of a single square (width and height)
+    :param start_x: x position of upper left corner of squares
+    :param start_y: y position of upper left corner of squares
+    :param pieces: pieces on the bord (1st FEN group)
+    """
+
     rows = pieces.split('/')
     row_no = 0
     line_no  = 0
@@ -95,6 +114,7 @@ def draw_pieces(image, square_size, start_x, start_y, pieces):
 
 
 def draw_diagram_for_fen(fen):
+    """ Creates an image for the given FEN position."""
 
     image = create_image(BOARD_SIZE, BOARD_SIZE, color=BOARD_COLOR_BORDER)
 
