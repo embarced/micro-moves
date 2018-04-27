@@ -8,11 +8,13 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def index():
+    """ Displays a simple demo page with links for diagram examples. """
     return flask.render_template('index.html')
 
 
 @app.route('/board.png')
 def board_png():
+    """ Creates a PNG image for FEN position givan as request paramaeter."""
 
     fen = flask.request.args.get("fen")
     if fen == '' or fen is None:
