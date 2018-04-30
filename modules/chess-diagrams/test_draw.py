@@ -19,4 +19,4 @@ def test_create_image():
 def test_draw_diagram_for_fen():
     initial_pos_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     img = draw.draw_diagram_for_fen(initial_pos_fen)
-    assert not img == None
+    assert not (img is None)
