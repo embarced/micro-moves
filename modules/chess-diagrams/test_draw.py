@@ -16,6 +16,18 @@ def test_create_image():
     assert first_color[1] == (255, 0, 0, 255) # pixel (red)
 
 
+# completely fill an image with checkered squares
+def test_draw_board():
+
+    img = draw.create_image(80, 80, color='red')
+    assert img.width == 80
+    assert img.height == 80
+
+    draw.draw_board(img, 10, 0, 0, 'white', 'black')
+    color_list = img.getcolors()
+    assert len(color_list) == 2
+
+
 def test_draw_diagram_for_fen():
     initial_pos_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     img = draw.draw_diagram_for_fen(initial_pos_fen)
