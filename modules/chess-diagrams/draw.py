@@ -43,7 +43,7 @@ def create_image (width, height, color='white'):
 
 def draw_board (image, square_size, start_x, start_y, light=BOARD_COLOR_LIGHT, dark=BOARD_COLOR_DARK):
     """
-    Draw a chequered 8x8 chess board into a given images.
+    Draw a checkered 8x8 chess board into a given images.
 
     :param image: target image
     :param square_size: size of a single square (width and height)
