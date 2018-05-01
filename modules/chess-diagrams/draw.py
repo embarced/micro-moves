@@ -15,6 +15,7 @@ BOARD_COLOR_KEY = 'white'
 
 
 FONT_PATH = 'fonts/'
+FONT_FILENAME = 'arial.ttf'
 IMAGE_PATH = 'images/pieces/32'
 ALL_PIECES = ( 'bb', 'bk', 'bn', 'bp', 'bq', 'br', 'wb', 'wk', 'wn', 'wp', 'wq', 'wr')
 
@@ -82,7 +83,7 @@ def draw_key(image, square_size, start_x, start_y):
     font_dy = int((start_y - font_size) / 2)
     font_dx = int((start_x - font_size/2)/2)
 
-    font = PIL.ImageFont.truetype(FONT_PATH + 'arial.ttf', font_size)
+    font = PIL.ImageFont.truetype(FONT_PATH + FONT_FILENAME, font_size)
     img_draw = PIL.ImageDraw.Draw(image)
 
     rank_names = "87654321"
