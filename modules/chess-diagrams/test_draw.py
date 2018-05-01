@@ -27,7 +27,7 @@ def test_draw_board():
     color_list = img.getcolors()
     assert len(color_list) == 2
 
-
+# Create a diagram for the initial game position
 def test_draw_diagram_for_fen():
     initial_pos_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     img = draw.draw_diagram_for_fen(initial_pos_fen)
