@@ -1,0 +1,14 @@
+**/.idea/**
+**/.gradle/**
+*.class
+.DS_Store
+*.pyc
+
+modules/chess-diagrams/.tox/**
+modules/chess-diagrams/.pytest_cache/**
+modules/chess-diagrams/__pycache__/**
+modules/chess-diagrams/docs/**
+
+modules/games/games.iml
+modules/games/build/**
+modules/games/out/**
