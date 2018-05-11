@@ -8,6 +8,8 @@ import org.flexess.games.service.IllegalMoveException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +24,15 @@ import java.util.List;
  *
  * @author stefanz
  */
+@CrossOrigin(origins = "*")
 @RestController
 public class GameRestController {
 
     @Autowired
     GameService gameService;
+
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
 
     /**
      * Provides essential information for all games.
@@ -150,6 +156,7 @@ public class GameRestController {
 
         try {
             gameService.createAndPerformMove(gameId, input.getText());
+            messagingTemplate.convertAndSend("/topic/game_"+gameId, DtoFactory.createGameDetailsDto(game));
         } catch (IllegalMoveException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
