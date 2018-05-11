@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title>FLEXess</title>
+</head>
+<body>
+<div id="app">
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">FLEXess</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/games/">Games</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div v-cloak class="container" >
+
+        <div class="page-header">
+            <h1>Game #{{ game.gameId }}</h1>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <img :src="gameFenLink" v-on:click="boardImageClicked" >
+            </div>
+
+            <div class="col-sm-4">
+
+                <!-- Indicator fpr active player -->
+                <div class="form-group">
+                    <label for="ctm">Colour to move:</label><br>
+                    <button id="ctm" v-if="game.activeColour=='b'" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-user"></span>  Black
+                    </button>
+                    <button v-if="game.activeColour=='w'" type="button" class="btn btn-info">
+                        <span class="glyphicon glyphicon-user"></span>  White
+                    </button>
+                </div>
+
+                <div class = "form-group">
+                    <label for="nextMove">Move:</label>
+                    <input v-model="nextMove" type = "text" class = "form-control" id = "nextMove" placeholder = "Enter next move" name="nextMove" @keyup.13="sendMove">
+                </div>
+
+                <button @click="sendMove()" type = "submit" class = "btn btn-default">Send Move</button>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <hr>
+    <pre>
+        {{ game }}
+    </pre>
+
+</div>
+
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+
+<script src="src/games.js"></script>
+<script src="src/chess-diagrams.js"></script>
+<script src="./src/main.js"></script>
+
+</html>
