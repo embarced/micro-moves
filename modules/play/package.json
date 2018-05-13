@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "An SPA to play games",
   "scripts": {
-    "start": "npx httpserver -p 7000"
+    "start": "httpserver -p 7000"
   },
   "author": "StefanZ",
   "dependencies": {
-    "npx": "^10.2.0"
+    "httpserver": "^0.3.0"
   }
 }
