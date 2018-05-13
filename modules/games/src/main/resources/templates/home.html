@@ -1,51 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+<head th:replace="fragments/head :: head">
     <title>FLEXess</title>
 </head>
 <body>
 <div>
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="fragments/navbar :: navbar" />
 
     <div class = "container">
 
-        <div class="page-header">
-            <h1>All Games</h1>
-        </div>
 
-        <div>
-            <table class = "table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Player White</th>
-                    <th>Player Black</th>
-                    <th>Created</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="game : ${games}" >
-                    <td th:text="${game.id}">4711</td>
-                    <td th:text="${game.playerWhite}">Peter</td>
-                    <td th:text="${game.playerBlack}">Paul</td>
-                    <td th:text="${game.created}">dd.mm.yyyy</td>
-                    <td ><a th:href="'/play/?game_id='+${game.id}">Play</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div>
-            <a class="btn btn-primary" href="./new_game" role="button">Create a new Game</a>
-        </div>
+    <div class = "jumbotron">
+        <h1>Welcome to FLEXess</h1>
+        <p>
+            A flexible chess plattform.
+        </p>
+        <p>
+            This module games is implemented with Spring Boot and uses Spring Web MVC, Spring Data and Thymeleaf.
+            See <a href="https://www.embarc.de/micro-moves/" target="_blank">Micro Moves</a> blog series for details.
+        </p>
+        <p>
+            <a class = "btn btn-primary btn-lg" role = "button" href="/games">See all games</a>
+        </p>
+    </div>
 
     </div>
 
-</div>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <div th:replace="fragments/footer :: footer" />
 </body>
 </html>
