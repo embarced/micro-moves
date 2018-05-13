@@ -1,0 +1,9 @@
+{
+  "name": "play",
+  "version": "0.1.0",
+  "description": "An SPA to play games",
+  "scripts": {
+    "start": "npx httpserver -p 7000"
+  },
+  "author": "StefanZ"
+}

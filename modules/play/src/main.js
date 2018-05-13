@@ -1,25 +1,34 @@
-var data={
+const GAME_ID_REQUEST_PARAM = 'game_id';
+
+let data={
     game: '',
     nextMove: '',
     message: {
         type: 'none',
         text: ""
     }
-
 };
+
 new Vue({
     el: '#app',
     data: data,
     mounted: async function(){
-        const game_id = getRequestParameter('game_id');
+        const game_id = this.gameIdFromRequestParam();
         const currentGame = await getGame(game_id);
         Vue.set(data, 'game', currentGame);
         connect(game_id);
     },
     methods: {
-        switchToGame: async function(givenId){
-            const currentGame = await getGame(givenId);
-            Vue.set(data, 'game', currentGame);
+        gameIdFromRequestParam() {
+            let name = '';
+            let result = 1;
+            /*
+            Source: https://stackoverflow.com/questions/831030/how-to-get-get-request-parameters-in-javascript
+            */
+            if(name=(new RegExp('[?&]'+encodeURIComponent(GAME_ID_REQUEST_PARAM)+'=([^&]*)')).exec(location.search)) {
+                result = decodeURIComponent(name[1]);
+            }
+            return result;
         },
         sendMove: async function () {
             try {
@@ -44,12 +53,7 @@ new Vue({
     },
     computed: {
         gameFenLink: function() {
-            if (this.game != '') {
-                const link = 'http://localhost:5000/board.png?fen=' + this.game.fen;
-                return encodeURI(link);
-            } else {
-                return '';
-            }
+            return diagramUrlForFen(this.game.fen)
         }
     }
 });

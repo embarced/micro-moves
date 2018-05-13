@@ -1,9 +1,11 @@
-/*
-Source: https://stackoverflow.com/questions/831030/how-to-get-get-request-parameters-in-javascript
-*/
-function getRequestParameter(name){
-    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-        return decodeURIComponent(name[1]);
+const DIAGRAM_URL = 'http://localhost:5000/board.png';
+
+function diagramUrlForFen (fen) {
+    let link = DIAGRAM_URL + '?fen=' + fen;
+    if (fen) {
+        link += '?fen=' + fen;
+    }
+    return encodeURI(link);
 }
 
 function fieldNameFromCoords(x, y, boardWidth) {
