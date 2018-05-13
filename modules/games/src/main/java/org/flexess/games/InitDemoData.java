@@ -37,6 +37,9 @@ public class InitDemoData {
             gameService.endGame(foolsMateId, GameResult.BLACK_WINS);
 
             gameService.openGame("peter", 'b');
+
+            Game thirdGame = gameService.openGame("paul", 'w');
+            gameService.enterGame(thirdGame.getId(), "mary");
         }
     }
 
