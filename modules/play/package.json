@@ -6,5 +6,7 @@
     "start": "npx httpserver -p 7000"
   },
   "author": "StefanZ",
-  "dependencies": "npx"
+  "dependencies": {
+    "npx": "^10.2.0"
+  }
 }
