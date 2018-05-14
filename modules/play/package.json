@@ -2,10 +2,11 @@
   "name": "play",
   "version": "0.1.0",
   "description": "An SPA to play games",
+  "author": "StefanZ",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "httpserver -p 7000"
   },
-  "author": "StefanZ",
   "dependencies": {
     "httpserver": "^0.3.0"
   }
