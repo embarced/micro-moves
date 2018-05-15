@@ -29,16 +29,19 @@
     <div v-cloak class="container" >
 
         <div class="page-header">
-            <h1>Game #{{ game.gameId }}</h1>
+            <h1>
+                {{ game.playerWhite }} vs. {{ game.playerBlack }}
+                <small>Game #{{ game.gameId }}</small>
+            </h1>
         </div>
 
         <div class="row">
 
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <img :src="gameFenLink" v-on:click="boardImageClicked" >
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-5">
 
                 <!-- Indicator fpr active player -->
                 <div class="form-group">
@@ -57,6 +60,22 @@
                 </div>
 
                 <button @click="sendMove()" type = "submit" class = "btn btn-default">Send Move</button>
+
+                <div class="form-group">
+                    &nbsp;
+                </div>
+                <div v-if="message.type=='success'" class="alert alert-success">
+                    <strong>Success!</strong> {{ message.text }}
+                </div>
+                <div v-if="message.type=='info'" class="alert alert-info">
+                    <strong>Info!</strong> {{ message.text }}
+                </div>
+                <div v-if="message.type=='warning'" class="alert alert-warning">
+                    <strong>Warning!</strong> {{ message.text }}
+                </div>
+                <div v-if="message.type=='error'" class="alert alert-danger">
+                    <strong>Danger!</strong> {{ message.text }}
+                </div>
 
 
             </div>
@@ -79,17 +98,17 @@
     }
 </style>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
 
-<script src="src/games.js"></script>
-<script src="src/chess-diagrams.js"></script>
+<script src="./src/games.js"></script>
+<script src="./src/chess-diagrams.js"></script>
 <script src="./src/main.js"></script>
 
 </html>

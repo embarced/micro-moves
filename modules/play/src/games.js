@@ -1,13 +1,13 @@
 const REST_URL = 'http://localhost:8080/api/games';
 const WEBSOCKET_URL = 'http://localhost:8080/games-websocket';
 
-async function getGame(gameId) {
+async function restGetGame(gameId) {
     const gameUrl = `${REST_URL}/${gameId}`;
     const rs = await axios.get(gameUrl);
     return rs.data;
 }
 
-async function sendMove(nextMove, gameId) {
+async function restSendMove(nextMove, gameId) {
     const mv = {
         text: nextMove
     };
@@ -32,25 +32,28 @@ async function sendMove(nextMove, gameId) {
     }
 }
 
+/* Functions for WebSocket
+*/
+
 let stompClient = null;
 
-function connect(gameId) {
+function webSocketConnect(gameId) {
     const socket = new SockJS(WEBSOCKET_URL);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         const topic = `/topic/game_${gameId}`;
         stompClient.subscribe(topic, function (game) {
-            gameReceived(JSON.parse(game.body));
+            webSocketGameReceived(JSON.parse(game.body));
         });
     });
 }
 
-function disconnect() {
+function webSocketDisconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
     }
 }
 
-function gameReceived(message) {
+function webSocketGameReceived(message) {
     Vue.set(data, 'game', message);
 }

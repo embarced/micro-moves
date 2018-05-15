@@ -14,9 +14,9 @@ new Vue({
     data: data,
     mounted: async function(){
         const game_id = this.gameIdFromRequestParam();
-        const currentGame = await getGame(game_id);
+        const currentGame = await restGetGame(game_id);
         Vue.set(data, 'game', currentGame);
-        connect(game_id);
+        webSocketConnect(game_id);
     },
     methods: {
         gameIdFromRequestParam() {
@@ -32,7 +32,7 @@ new Vue({
         },
         sendMove: async function () {
             try {
-                await sendMove(this.nextMove, this.game.gameId);
+                await restSendMove(this.nextMove, this.game.gameId);
             } catch (error) {
                 Vue.set(data, 'message', error);
                 return;
