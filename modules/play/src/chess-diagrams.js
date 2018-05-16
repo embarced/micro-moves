@@ -1,7 +1,7 @@
 const DIAGRAM_URL = 'http://localhost:5000/board.png';
 
 function diagramUrlForFen (fen) {
-    let link = DIAGRAM_URL + '?fen=' + fen;
+    let link = DIAGRAM_URL;
     if (fen) {
         link += '?fen=' + fen;
     }
