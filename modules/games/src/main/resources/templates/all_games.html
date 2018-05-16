@@ -21,24 +21,32 @@
                     <th>ID</th>
                     <th>Player White</th>
                     <th>Player Black</th>
-                    <th>Created</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="game : ${games}" >
+                <tr th:each="game : ${games}">
                     <td th:text="${game.id}">4711</td>
                     <td th:text="${game.playerWhite}">Peter</td>
                     <td th:text="${game.playerBlack}">Paul</td>
-                    <td th:text="${game.created}">dd.mm.yyyy</td>
-                    <td ><a th:href="'/play/?game_id='+${game.id}">Play</a></td>
+                    <td th:text="${game.status}">STATUS</td>
+                    <td th:if="${game.status == T(org.flexess.games.domain.GameStatus).ENDED}">
+                        <a class = "btn btn-default" role = "button">View game</a>
+                    </td>
+                    <td th:if="${game.status == T(org.flexess.games.domain.GameStatus).OPEN}">
+                        <a class = "btn btn-default" role = "button">Enter game</a>
+                    </td>
+                    <td th:if="${game.status == T(org.flexess.games.domain.GameStatus).RUNNING}">
+                        <a class = "btn btn-success" role = "button" th:href="'http://localhost:7000/?game_id='+${game.id}">Play Game!</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
         <div>
-            <a class="btn btn-primary" href="./new_game" role="button">Create a new Game</a>
+            <a class="btn btn-default" href="/new_game" role="button">Create a new Game</a>
         </div>
 
     </div>

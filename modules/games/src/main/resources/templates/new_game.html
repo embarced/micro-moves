@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title>FLEXess</title>
+</head>
+<body>
+<div>
+    <div th:replace="fragments/navbar :: navbar" />
+
+    <div class = "container">
+
+        <div class="page-header">
+            <h1>New Game</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5">
+
+
+            <form action="#" th:action="@{./new_game}" th:object="${newGameForm}" method="post">
+
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('playerWhite')}?has-error">
+
+                <label class="control-label" for="playerBlack">Player White</label>
+                <input type="text" id="playerWhite" class="form-control" th:field="*{playerWhite}" />
+            </div>
+
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('playerBlack')}?has-error">
+
+                <label class="control-label" for="playerBlack">Player Black</label>
+                <input type="text" id="playerBlack" class="form-control" th:field="*{playerBlack}" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+</body>
+</html>
