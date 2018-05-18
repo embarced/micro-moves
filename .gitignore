@@ -12,3 +12,5 @@ modules/chess-diagrams/docs/**
 modules/games/games.iml
 modules/games/build/**
 modules/games/out/**
+
+modules/play/node_modules/**
