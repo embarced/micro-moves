@@ -6,12 +6,15 @@ Manages games between players, stores their moves.
 * Spring Boot 2.0 (Spring Web MVC, Spring Data ...)
 * Thymeleaf
 
-## Starting the Service
+## Starting the Service standalone
 
 ./gradlew bootRun
 
 (runs the Spring Boot WebApp on Port 8080)
 
 ## Resources
+* Spring Boot, https://projects.spring.io/spring-boot/
+* Jackson Annotation Examples, http://www.baeldung.com/jackson-annotations
+* Postman - an API Development Environment, https://www.getpostman.com
 * Thymeleaf - a modern server-side Java template engine, https://www.thymeleaf.org
 * Using WebSocket to build an interactive web application, https://spring.io/guides/gs/messaging-stomp-websocket/
