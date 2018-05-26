@@ -10,9 +10,12 @@ Creates chess graphics, especially chess boards with positions
 * pip install tox
 * tox
 
-## Starting the service
+## Starting the service standalone
 * pip install -r requirements.txt
 * python chess_diagrams.py
 
 ## Resources
-* Testing Flask applications http://flask.pocoo.org/docs/1.0/testing/
+* Flask - a microframework for Python, http://flask.pocoo.org
+* Pillow - The friendly PIL fork, http://python-pillow.org
+* tox - automate and standardize testing in Python, https://tox.readthedocs.io/en/latest/
+* Testing Flask applications, http://flask.pocoo.org/docs/1.0/testing/
