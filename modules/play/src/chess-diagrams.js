@@ -1,4 +1,4 @@
-const DIAGRAM_URL = 'http://localhost:5000/board.png';
+const DIAGRAM_URL = 'http://' + window.location.host +'/chess-diagrams/board.png';
 
 function diagramUrlForFen (fen) {
     let link = DIAGRAM_URL;

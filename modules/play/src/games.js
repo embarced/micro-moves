@@ -1,5 +1,5 @@
-const REST_URL = 'http://localhost:8080/api/games';
-const WEBSOCKET_URL = 'http://localhost:8080/games-websocket';
+const REST_URL = 'http://' + window.location.host + '/games-api/games';
+const WEBSOCKET_URL = 'http://' + window.location.host + '/games-websocket';
 
 async function restGetGame(gameId) {
     const gameUrl = `${REST_URL}/${gameId}`;
