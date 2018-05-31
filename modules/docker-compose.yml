@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  games:
+    build: ./games/
+
+  chess-diagrams:
+    build: ./chess-diagrams/
+
+  play:
+    build: ./play/
+    depends_on:
+      - "games"
+      - "chess-diagrams"
+
+  reverse-proxy:
+    build: ./reverse-proxy/
+    ports:
+      - "9000:80"
+    depends_on:
+      - "games"
+      - "chess-diagrams"
+      - "play"
