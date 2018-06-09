@@ -130,15 +130,31 @@ const ChessRules = {
     isCheckmate: function (position) {
         let result = false;
         const validMoves = ChessRules.getAllValidMoves(position);
+        const activeColour = position.activeColour;
         if (validMoves.length === 0) {
-            const otherColour = Colour.other(position.activeColour);
-            const kingSquare = position.findKing(otherColour);
+            const otherColour = Colour.other(activeColour);
+            const kingSquare = position.findKing(activeColour);
             if (ChessRules.isSquareAttackedByColour(position, kingSquare, otherColour)) {
                 result = true;
             }
         }
         return result;
     },
+
+    isStalemate: function (position) {
+        let result = false;
+        const validMoves = ChessRules.getAllValidMoves(position);
+        const activeColour = position.activeColour;
+        if (validMoves.length === 0) {
+            const otherColour = Colour.other(activeColour);
+            const kingSquare = position.findKing(activeColour);
+            if (!ChessRules.isSquareAttackedByColour(position, kingSquare, otherColour)) {
+                result = true;
+            }
+        }
+        return result;
+    },
+
 
 
     getAllValidMoves: function (position) {
