@@ -1,0 +1,16 @@
+{
+  "name": "rules",
+  "version": "0.1.0",
+  "description": "rules for the game of chess",
+  "license": "Apache-2.0",
+  "main": "server-main.js",
+  "scripts": {
+    "start": "node server-main.js",
+    "test": "npx mocha tests --recursive",
+    "dev": "npx nodemon server-main.js"
+  },
+  "author": "StefanZ",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
