@@ -1,8 +1,13 @@
 version: '3'
 services:
 
+  rules:
+    build: ./rules/
+
   games:
     build: ./games/
+    depends_on:
+      - "rules"
 
   chess-diagrams:
     build: ./chess-diagrams/
@@ -18,6 +23,7 @@ services:
     ports:
       - "9000:80"
     depends_on:
+      - "rules"
       - "games"
       - "chess-diagrams"
       - "play"
