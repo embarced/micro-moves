@@ -18,7 +18,6 @@ app.get('/allValidMoves', function (req, res) {
     if (fen === undefined ) {
         fen='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
     }
-    console.log(fen);
 
     const pos = new domain.Position(fen);
     const moves = ChessRules.getAllValidMoves(pos);
@@ -29,10 +28,7 @@ app.get('/allValidMoves', function (req, res) {
         moves: movesWithNames
     };
 
-    const jsonResult = JSON.stringify(result);
-    console.log(jsonResult);
-
-    res.end(jsonResult);
+    res.json(result);
 });
 
 app.get('/validateMove', function (req, res) {
@@ -56,18 +52,14 @@ app.get('/validateMove', function (req, res) {
         result.valid = true;
         const newPos = pos.performMove(new Move(move));
         result.resultingFen = newPos.toString();
-        result.isCheckmateAfterMove = ChessRules.isCheckmate(newPos);
-        result.isStalemateAfterMove = ChessRules.isStalemate(newPos);
+        result.checkmateAfterMove = ChessRules.isCheckmate(newPos);
+        result.stalemateAfterMove = ChessRules.isStalemate(newPos);
     } else {
         result.valid = false;
     }
 
-    const jsonResult = JSON.stringify(result);
-    console.log(jsonResult);
-
-    res.end(jsonResult);
+    res.json(result);
 });
-
 
 
 const server = app.listen(8081, function () {
@@ -77,4 +69,4 @@ const server = app.listen(8081, function () {
 
     console.log("rules server app listening at http://%s:%s", host, port)
 
-})
+});
