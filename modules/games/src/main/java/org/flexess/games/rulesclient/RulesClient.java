@@ -3,6 +3,7 @@ package org.flexess.games.rulesclient;
 import org.flexess.games.domain.Move;
 import org.flexess.games.service.Position;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.net.URLEncoder;
 /**
  * Client gateway for the rules subsystem.
  */
+@Component
 public class RulesClient {
 
     private static final String HOSTNAME = "rules";
