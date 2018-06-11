@@ -1,10 +1,11 @@
 const assert = require('assert');
 const domain = require("../../domain.js");
-const Square = domain.Square;
 
 
 const geometry = require("../..//geometry.js");
 const BoardGeometry = geometry.BoardGeometry;
+const Square = geometry.Square;
+
 
 describe('BoardGeometry unit tests', () => {
 

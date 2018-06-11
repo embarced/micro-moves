@@ -14,12 +14,12 @@ const ROOK = PieceType.ROOK;
 const BISHOP = PieceType.BISHOP;
 const KNIGHT = PieceType.KNIGHT;
 
-const Square = domain.Square;
 const Piece = domain.Piece;
 const Move = domain.Move;
 
-const boardGeometrie = require("./geometry.js");
-const BoardGeometry = boardGeometrie.BoardGeometry;
+const boardGeometry = require("./geometry.js");
+const BoardGeometry = boardGeometry.BoardGeometry;
+const Square = boardGeometry.Square;
 
 /**
  * The rules of chess.

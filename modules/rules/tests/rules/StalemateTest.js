@@ -7,9 +7,9 @@ const ChessRules = rules.ChessRules;
 const Position = domain.Position;
 
 const Colour = domain.Colour;
-const Square = domain.Square;
 
-
+const boardGeometry = require("../../geometry.js");
+const Square = boardGeometry.Square;
 
 
 describe('ChessRules unit tests', () => {

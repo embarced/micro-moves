@@ -1,4 +1,8 @@
 const assert = require('assert');
+
+const boardGeometry = require("../../geometry.js");
+const Square = boardGeometry.Square;
+
 const domain = require("../../domain.js");
 
 const Position = domain.Position;
@@ -6,7 +10,6 @@ const Colour = domain.Colour;
 const PieceType = domain.PieceType;
 
 const Piece = domain.Piece;
-const Square = domain.Square;
 const Move = domain.Move;
 
 describe('Position unit tests', function () {

@@ -2,8 +2,10 @@ const assert = require('assert');
 const domain = require("../../domain.js");
 
 const Move = domain.Move;
-const Square = domain.Square;
 const PieceType = domain.PieceType;
+
+const boardGeometry = require("../../geometry.js");
+const Square = boardGeometry.Square;
 
 describe('Move unit tests', () => {
 
