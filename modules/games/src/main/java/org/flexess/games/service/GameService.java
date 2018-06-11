@@ -6,6 +6,9 @@ import org.flexess.games.domain.GameResult;
 import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
+import org.flexess.games.rulesclient.MoveValidationNotPossibleException;
+import org.flexess.games.rulesclient.RulesClient;
+import org.flexess.games.rulesclient.ValidateMoveResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,9 @@ public class GameService {
 
     @Autowired
     private MoveRepository moveRepository;
+
+    @Autowired
+    private RulesClient rulesClient;
 
     /**
      * Get a game by its ID.
@@ -119,57 +125,48 @@ public class GameService {
      * @param gameId game ID
      * @param sMove  move as String, e.g. "e2e4"
      * @return move object
-     * @throws IllegalMoveException move is not valid according to rules.
+     * @throws IllegalMoveException move is not compliant according to rules.
+     * @throws MoveValidationNotPossibleException move validation failed.
      */
-    public Move createAndPerformMove(Long gameId, String sMove) throws IllegalMoveException {
+    public Move createAndPerformMove(Long gameId, String sMove) throws IllegalMoveException, MoveValidationNotPossibleException {
 
         Move move = new Move(sMove);
         Game game = this.getGameById(gameId);
 
-        performMove(game, move);
+        Position currentPos = new Position(game.getPosition());
 
-        move.setGame(game);
-        List<Move> moves = moveRepository.findByGame(game);
-        move.setNumber(moves.size() + 1L);
+        ValidateMoveResult result
+                = rulesClient.validateMove(currentPos, move);
 
-        moveRepository.save(move);
-        gameRepository.save(game);
+        if (result.isValid()) {
+
+            Position newPos = new Position(result.getResultingFen());
+            game.setPosition(newPos.toString());
+            game.setActiveColour(newPos.getActiveColour());
+
+            move.setGame(game);
+            List<Move> moves = moveRepository.findByGame(game);
+            move.setNumber(moves.size() + 1L);
+
+            moveRepository.save(move);
+            gameRepository.save(game);
+
+            if (result.isStalemateAfterMove()) {
+                this.endGame(game.getId(), GameResult.DRAW);
+            }
+
+            if (result.isCheckmateAfterMove()) {
+                if (newPos.getActiveColour() == 'b') {
+                    this.endGame(game.getId(), GameResult.WHITE_WINS);
+                } else {
+                    this.endGame(game.getId(), GameResult.BLACK_WINS);
+                }
+            }
+        } else {
+            throw new IllegalMoveException("Move " + move + " not compliant to chess rules.");
+        }
 
         return move;
-    }
-
-    void performMove(Game game, Move move) {
-
-        Position pos = new Position(game.getPosition());
-        String from = move.getFrom();
-        String to = move.getTo();
-
-        char piece = pos.getPiece(from);
-
-        if (piece == ' ') {
-            throw new IllegalMoveException("Square " + from + " is empty.");
-        }
-
-        if (Character.isUpperCase(piece) && game.getActiveColour() == 'b') {
-            throw new IllegalMoveException("Piece at " + from + " has wrong colour.");
-        }
-
-        if (Character.isLowerCase(piece) && game.getActiveColour() == 'w') {
-            throw new IllegalMoveException("Piece at " + from + " has wrong colour.");
-        }
-
-        // perform move, TODO: advanced rules like en passent or castling
-        pos.setPiece(from, ' ');
-        pos.setPiece(to, piece);
-
-        if (pos.getActiveColour() == 'b') {
-            pos.setFullmoveNumber(pos.getFullmoveNumber() + 1);
-        }
-
-        pos.setActiveColour(otherColour(pos.getActiveColour()));
-
-        game.setPosition(pos.toString());
-        game.setActiveColour(pos.getActiveColour());
     }
 
     private char otherColour(char colour) {

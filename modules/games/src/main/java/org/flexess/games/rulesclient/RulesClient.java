@@ -22,7 +22,7 @@ public class RulesClient {
     private static final String HOSTNAME = "rules";
     private static final int PORT = 8081;
 
-    public ValidateMoveResult validateMove(Position position, Move move) {
+    public ValidateMoveResult validateMove(Position position, Move move) throws MoveValidationNotPossibleException {
 
         ValidateMoveResult validateMoveResult = new ValidateMoveResult();
 
@@ -63,7 +63,7 @@ public class RulesClient {
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new MoveValidationNotPossibleException(e.getMessage(), e);
         }
 
         return validateMoveResult;
