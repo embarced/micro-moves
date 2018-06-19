@@ -138,7 +138,10 @@ public class GameService {
         ValidateMoveResult result
                 = rulesClient.validateMove(currentPos, move);
 
-        if (result.isValid()) {
+        if (result.isValidationFailed()) {
+            String message = "Validation failed. "+result.getDescription();
+            throw new IllegalMoveException(message);
+        } else if (result.isValid()) {
 
             Position newPos = new Position(result.getResultingFen());
             game.setPosition(newPos.toString());
@@ -163,7 +166,7 @@ public class GameService {
                 }
             }
         } else {
-            throw new IllegalMoveException("Move " + move + " not compliant to chess rules.");
+            throw new IllegalMoveException("Move " + move.getText() + " not compliant to chess rules.");
         }
 
         return move;

@@ -2,6 +2,7 @@ package org.flexess.games;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 
 /**
  * Main class for this Spring Boot application.
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author stefanz
  */
 @SpringBootApplication
+@EnableCircuitBreaker
 public class Application {
 
     /**

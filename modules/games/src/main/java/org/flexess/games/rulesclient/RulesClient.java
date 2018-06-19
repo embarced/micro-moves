@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+
 /**
  * Client gateway for the rules subsystem.
  */
@@ -22,7 +25,8 @@ public class RulesClient {
     private static final String HOSTNAME = "rules";
     private static final int PORT = 8081;
 
-    public ValidateMoveResult validateMove(Position position, Move move) throws MoveValidationNotPossibleException {
+    @HystrixCommand(fallbackMethod = "serviceNotAvailable")
+    public ValidateMoveResult validateMove(Position position, Move move)  {
 
         ValidateMoveResult validateMoveResult = new ValidateMoveResult();
 
@@ -55,18 +59,27 @@ public class RulesClient {
                     validateMoveResult.setCheckmateAfterMove(jsonObject.getBoolean("checkmateAfterMove"));
                 }
 
-
                 if (jsonObject.has("stalemateAfterMove")) {
                     validateMoveResult.setStalemateAfterMove(jsonObject.getBoolean("stalemateAfterMove"));
                 }
-
             }
 
         } catch (IOException e) {
-            throw new MoveValidationNotPossibleException(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
 
+        validateMoveResult.setValidationFailed(false);
         return validateMoveResult;
+    }
+
+    public ValidateMoveResult serviceNotAvailable(Position position, Move move) {
+
+        ValidateMoveResult result = new ValidateMoveResult();
+        result.setValid(false);
+        result.setValidationFailed(true);
+        result.setDescription("Rules service not available.");
+
+        return result;
     }
 
     private String readFromInputStream(InputStream inputStream) throws IOException {

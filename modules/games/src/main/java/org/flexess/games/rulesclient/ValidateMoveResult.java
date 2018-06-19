@@ -4,11 +4,15 @@ public class ValidateMoveResult {
 
     private boolean valid;
 
+    private boolean validationFailed;
+
     private String resultingFen;
 
     private boolean checkmateAfterMove;
 
     private boolean stalemateAfterMove;
+
+    private String description;
 
     public boolean isValid() {
         return valid;
@@ -16,6 +20,14 @@ public class ValidateMoveResult {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public boolean isValidationFailed() {
+        return validationFailed;
+    }
+
+    public void setValidationFailed(boolean validationFailed) {
+        this.validationFailed = validationFailed;
     }
 
     public String getResultingFen() {
@@ -40,5 +52,13 @@ public class ValidateMoveResult {
 
     public void setStalemateAfterMove(boolean stalemateAfterMove) {
         this.stalemateAfterMove = stalemateAfterMove;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
