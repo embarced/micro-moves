@@ -72,6 +72,37 @@ describe('Position unit tests', function () {
             assert.ok(!pos3.isEmpty(Square.e4));
         });
 
+
+        it('promotion black', function () {
+            const pos = new Position('r8/1P6/2K2p2/8/8/5k2/6p1/8 b - - 0 1');
+
+            // plack pawn promotes to queen
+            const move1 = new Move("g2g1Q");
+            const pos1 = pos.performMove(move1);
+            assert.deepEqual(pos1.onSquare(Square.g1), Piece.fromChar('q'));
+
+            // plack pawn promotes to knight
+            const move2 = new Move("g2g1N");
+            const pos2 = pos.performMove(move2);
+            assert.deepEqual(pos2.onSquare(Square.g1), Piece.fromChar('n'));
+        });
+
+
+        it('promotion white', function () {
+            const pos = new Position('8/1P6/2K2p2/8/8/5k2/6p1/8 w - - 0 67');
+
+            // white pawn promotes to rook
+            const move1 = new Move("b7b8r");
+            const pos1 = pos.performMove(move1);
+            assert.deepEqual(pos1.onSquare(Square.b8), Piece.fromChar('R'));
+
+            // white pawn promotes to bishop
+            const move2 = new Move("b7b8b");
+            const pos2 = pos.performMove(move2);
+            assert.deepEqual(pos2.onSquare(Square.b8), Piece.fromChar('B'));
+        });
+
+
         it('fullmove counter', function () {
 
             let pos = new Position();

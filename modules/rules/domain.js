@@ -245,8 +245,16 @@ class Position {
             newPos.halfmoveClock = 0;
         }
 
-        newPos.board[move.to] = piece;
         newPos.board[move.from] = undefined;
+        newPos.board[move.to] = piece;
+
+        // Pawn promotion
+        if (piece.type === PieceType.PAWN) {
+            if ((this.activeColour === Colour.WHITE && Square.row(move.to) === 0) ||
+                (this.activeColour === Colour.BLACK && Square.row(move.to) === 7)) {
+                newPos.board[move.to] = new Piece(this.activeColour, move.promotion);
+            }
+        }
 
         newPos.enPassant = undefined;
         if (piece.type === PieceType.PAWN) {
