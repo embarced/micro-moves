@@ -1,7 +1,8 @@
 import subprocess
 import logging
 
-def calculateMove(fen, stockfish_executable ='stockfish'):
+
+def calculate_move(fen, stockfish_executable ='stockfish'):
     log = logging.getLogger(__name__)
 
     p = subprocess.Popen([stockfish_executable],

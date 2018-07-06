@@ -29,7 +29,7 @@ def callback(ch, method, properties, body):
     fen = message['fen']
     gameId = message['gameId']
 
-    best_move = stockfish.calculateMove(fen, STOCKFISH_EXECUTABLE)
+    best_move = stockfish.calculate_move(fen, STOCKFISH_EXECUTABLE)
     log.debug("Best move calculated by stockfish %r" % best_move)
 
     response = {'move': best_move, 'gameId': gameId}
