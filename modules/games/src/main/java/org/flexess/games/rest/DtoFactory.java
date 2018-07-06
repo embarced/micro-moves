@@ -4,9 +4,9 @@ import org.flexess.games.domain.Game;
 import org.flexess.games.domain.Move;
 
 /**
- * Factory fpr the Data Transfer Objects.
+ * Factory for the Data Transfer Objects.
  */
-class DtoFactory {
+public class DtoFactory {
 
     private DtoFactory() {
     }
@@ -20,7 +20,7 @@ class DtoFactory {
         return info;
     }
 
-    static GameDetailsDto createGameDetailsDto(Game game) {
+    public static GameDetailsDto createGameDetailsDto(Game game) {
         GameDetailsDto details = new GameDetailsDto();
         details.setGameId(game.getId());
         details.setActiveColour(game.getActiveColour());

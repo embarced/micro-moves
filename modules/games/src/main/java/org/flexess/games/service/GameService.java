@@ -6,6 +6,7 @@ import org.flexess.games.domain.GameResult;
 import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
+import org.flexess.games.messaging.PositionSender;
 import org.flexess.games.rulesclient.MoveValidationNotPossibleException;
 import org.flexess.games.rulesclient.RulesClient;
 import org.flexess.games.rulesclient.ValidateMoveResult;
@@ -33,6 +34,9 @@ public class GameService {
 
     @Autowired
     private RulesClient rulesClient;
+
+    @Autowired
+    private PositionSender positionSender;
 
     /**
      * Get a game by its ID.
@@ -101,6 +105,7 @@ public class GameService {
             }
             game.setStatus(GameStatus.RUNNING);
             gameRepository.save(game);
+            sendPositionIfNeccessary(game);
         } else {
             throw new IllegalStateException("Not possible to enter this game.");
         }
@@ -165,6 +170,8 @@ public class GameService {
                     this.endGame(game.getId(), GameResult.BLACK_WINS);
                 }
             }
+
+            sendPositionIfNeccessary(game);
         } else {
             throw new IllegalMoveException("Move " + move.getText() + " not compliant to chess rules.");
         }
@@ -177,6 +184,18 @@ public class GameService {
             return 'w';
         } else {
             return 'b';
+        }
+    }
+
+    void sendPositionIfNeccessary(Game game) {
+        if (game.getStatus() == GameStatus.RUNNING) {
+            if (game.getActiveColour() == 'w'
+                    && game.getPlayerWhite().equals("stockfish")) {
+                positionSender.send(game);
+            } else if (game.getActiveColour() == 'b'
+                    && game.getPlayerBlack().equals("stockfish")) {
+                positionSender.send(game);
+            }
         }
     }
 }

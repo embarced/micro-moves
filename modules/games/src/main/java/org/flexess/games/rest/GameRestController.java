@@ -6,6 +6,7 @@ import org.flexess.games.domain.Move;
 import org.flexess.games.service.GameService;
 import org.flexess.games.service.IllegalMoveException;
 import org.flexess.games.rulesclient.MoveValidationNotPossibleException;
+import org.flexess.games.websocket.WebSocketPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class GameRestController {
     GameService gameService;
 
     @Autowired
-    SimpMessagingTemplate messagingTemplate;
+    WebSocketPublisher webSocketPublisher;
 
     /**
      * Provides essential information for all games.
@@ -157,7 +158,7 @@ public class GameRestController {
 
         try {
             gameService.createAndPerformMove(gameId, input.getText());
-            messagingTemplate.convertAndSend("/topic/game_"+gameId, DtoFactory.createGameDetailsDto(game));
+            webSocketPublisher.publish(game);
         } catch (IllegalMoveException | MoveValidationNotPossibleException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
