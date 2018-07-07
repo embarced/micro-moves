@@ -8,6 +8,7 @@ services:
     build: ./games/
     depends_on:
       - "rules"
+      - "messaging"
 
   chess-diagrams:
     build: ./chess-diagrams/
@@ -27,3 +28,20 @@ services:
       - "games"
       - "chess-diagrams"
       - "play"
+
+  computer-player:
+    build: ./computer-player/
+    depends_on:
+      - "messaging"
+
+  messaging:
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
