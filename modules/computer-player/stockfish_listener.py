@@ -21,7 +21,7 @@ def send_best_move(move):
                           )
                           )
 
-def callback(ch, method, properties, body):
+def receive_message(ch, method, properties, body):
 
     log.debug("Received %r" % body)
     message = json.loads(body)
@@ -60,7 +60,7 @@ while True:
 channel.queue_declare(queue='positions')
 channel.queue_declare(queue='moves')
 
-channel.basic_consume(callback,
+channel.basic_consume(receive_message,
                       queue='positions',
                       no_ack=True)
 
