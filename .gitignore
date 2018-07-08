@@ -1,18 +1,25 @@
+.DS_Store
+
+# for JavaScript modules
+**/node_modules/**
+
+
+# for Java modules
 **/.idea/**
 **/.gradle/**
 *.class
-.DS_Store
-*.pyc
 
-modules/chess-diagrams/.tox/**
-modules/chess-diagrams/.pytest_cache/**
-modules/chess-diagrams/__pycache__/**
+
+# for Python modules
+*.pyc
+**/.tox/**
+**/.pytest_cache/**
+**/__pycache__/**
+
+
+# module specific
 modules/chess-diagrams/docs/**
 
 modules/games/games.iml
 modules/games/build/**
 modules/games/out/**
-
-modules/play/node_modules/**
-
-modules/rules/node_modules/**
