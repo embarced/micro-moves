@@ -12,6 +12,8 @@ public class ValidateMoveResult {
 
     private boolean stalemateAfterMove;
 
+    private boolean drawnByFiftyMoveRule;
+
     private String description;
 
     public boolean isValid() {
@@ -52,6 +54,14 @@ public class ValidateMoveResult {
 
     public void setStalemateAfterMove(boolean stalemateAfterMove) {
         this.stalemateAfterMove = stalemateAfterMove;
+    }
+
+    public boolean isDrawnByFiftyMoveRule() {
+        return drawnByFiftyMoveRule;
+    }
+
+    public void setDrawnByFiftyMoveRule(boolean drawnByFiftyMoveRule) {
+        this.drawnByFiftyMoveRule = drawnByFiftyMoveRule;
     }
 
     public String getDescription() {

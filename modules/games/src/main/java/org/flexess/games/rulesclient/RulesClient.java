@@ -62,6 +62,11 @@ public class RulesClient {
                 if (jsonObject.has("stalemateAfterMove")) {
                     validateMoveResult.setStalemateAfterMove(jsonObject.getBoolean("stalemateAfterMove"));
                 }
+
+                if (jsonObject.has("drawnByFiftyMoves")) {
+                    validateMoveResult.setDrawnByFiftyMoveRule(jsonObject.getBoolean("drawnByFiftyMoves"));
+                }
+
             }
 
         } catch (IOException e) {

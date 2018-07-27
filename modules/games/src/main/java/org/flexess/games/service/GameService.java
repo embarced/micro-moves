@@ -163,6 +163,10 @@ public class GameService {
                 this.endGame(game.getId(), GameResult.DRAW);
             }
 
+            if (result.isDrawnByFiftyMoveRule()) {
+                this.endGame(game.getId(), GameResult.DRAW);
+            }
+
             if (result.isCheckmateAfterMove()) {
                 if (newPos.getActiveColour() == 'b') {
                     this.endGame(game.getId(), GameResult.WHITE_WINS);
