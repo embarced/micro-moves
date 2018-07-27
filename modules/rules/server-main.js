@@ -54,6 +54,7 @@ app.get('/validateMove', function (req, res) {
         result.resultingFen = newPos.toString();
         result.checkmateAfterMove = ChessRules.isCheckmate(newPos);
         result.stalemateAfterMove = ChessRules.isStalemate(newPos);
+        result.drawnByFiftyMoves = ChessRules.isDrawnByFiftyMoveRule(newPos);
     } else {
         result.valid = false;
     }

@@ -156,6 +156,23 @@ const ChessRules = {
     },
 
 
+    isDrawnByFiftyMoveRule: function (position) {
+
+        /*
+        According to Fide Laws of Chess, Article 9: "The drawn game"
+        If following occurs then the game is drawn:
+        any consecutive series of 75 moves have been completed by each player
+        without the movement of any pawn and without any capture.
+        https://en.wikipedia.org/wiki/Fifty-move_rule
+        */
+
+        let result = false;
+        if (position.halfmoveClock >= 150) {
+            result = true;
+        }
+        return result;
+    },
+
 
     getAllValidMoves: function (position) {
 
