@@ -13,10 +13,14 @@ services:
   chess-diagrams:
     build: ./chess-diagrams/
 
+  players:
+      build: ./players/
+
   play:
     build: ./play/
     depends_on:
       - "games"
+      - "players"
       - "chess-diagrams"
 
   reverse-proxy:

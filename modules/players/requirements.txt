@@ -1,0 +1,4 @@
+Flask
+gunicorn
+tinydb
+PyJWT
