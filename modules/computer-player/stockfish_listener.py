@@ -38,7 +38,7 @@ def receive_message(ch, method, properties, body):
     send_best_move(response_json)
 
 
-
+# TODO: Externalize
 credentials = pika.PlainCredentials('rabbitmq', 'rabbitmq')
 channel = None
 
