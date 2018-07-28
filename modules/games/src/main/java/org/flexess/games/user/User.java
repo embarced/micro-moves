@@ -1,4 +1,4 @@
-package org.flexess.games.domain;
+package org.flexess.games.user;
 
 /**
  * User object used for authenticated player info.
