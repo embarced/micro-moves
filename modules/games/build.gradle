@@ -47,6 +47,9 @@ dependencies {
     // Messaging
     compile("org.springframework.boot:spring-boot-starter-amqp")
 
+    // JWT
+    compile("com.auth0:java-jwt:3.3.0")
+
     testCompile("junit:junit")
 }
 
