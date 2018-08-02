@@ -1,9 +1,9 @@
 import jwt
 import flask
+import os
 
-# TODO: externalize
-JWT_COOKIE_NAME = 'flexess_jwt'
-JWT_SECRET = 'geheim'
+JWT_COOKIE_NAME = os.environ.get('JWT_COOKIE_NAME')
+JWT_SECRET = os.environ.get('JWT_SECRET')
 
 
 def user_to_jwt(user):
