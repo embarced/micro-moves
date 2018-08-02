@@ -1,12 +1,17 @@
 import pika
 import json
 import time
+import os
 import logging.config
 
 import stockfish
 
 STOCKFISH_EXECUTABLE = '/usr/games/stockfish'
-RABBITMQ_HOSTNAME = 'messaging'
+
+RABBITMQ_HOSTNAME = os.environ.get('RABBITMQ_HOSTNAME')
+RABBITMQ_USERNAME = os.environ.get('RABBITMQ_USERNAME')
+RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_PASSWORD')
+
 
 # load the logging configuration
 logging.config.fileConfig('logging.ini')
@@ -38,8 +43,7 @@ def receive_message(ch, method, properties, body):
     send_best_move(response_json)
 
 
-# TODO: Externalize
-credentials = pika.PlainCredentials('rabbitmq', 'rabbitmq')
+credentials = pika.PlainCredentials(RABBITMQ_USERNAME, RABBITMQ_PASSWORD)
 channel = None
 
 while True:
