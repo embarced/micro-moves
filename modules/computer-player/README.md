@@ -4,7 +4,7 @@ Integrates the open source chess engine Stockfish via AMQP / RabbitMQ.
 ## Technologies used
 * Stockfish
 * Python
-* Pypthon-Libraries: pika
+* Python-Libraries: pika
 * Tests with pytest and tox
 
 ## Running the tests
