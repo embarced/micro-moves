@@ -7,10 +7,12 @@
   "scripts": {
     "start": "node server-main.js",
     "test": "npx mocha tests --recursive",
+    "test-jenkins": "JUNIT_REPORT_PATH=./testreports/tests.xml npx mocha tests --recursive --reporter mocha-jenkins-reporter",
     "dev": "npx nodemon server-main.js"
   },
   "author": "StefanZ",
   "dependencies": {
+    "mocha-jenkins-reporter": "0.4.1",
     "express": "^4.16.2"
   }
 }
