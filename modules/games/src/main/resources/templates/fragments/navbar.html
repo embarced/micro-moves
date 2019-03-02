@@ -22,7 +22,24 @@
             <ul class="nav navbar-nav">
                 <li><a href="/players/">Players</a></li>
             </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li th:unless="${ user }"><a href="#">Register</a></li>
+                <li th:unless="${ user }"><a href="/players/login">Login</a></li>
+                <li th:if="${ user }" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false"><span th:remove="tag" th:text="${user.name}">Max Mayer</span> <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="'/players/profile_'+${user.userid}" th:text="'Profile '+${user.userid}">Profile mmy</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/players/logoff"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
+
     </div>
 </div>
 </body>

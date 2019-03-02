@@ -19,6 +19,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @Component
@@ -49,17 +50,7 @@ public class JwtCookieFilter implements Filter {
                     String token = cookie.getValue();
                     LOG.debug("JWT Cookie found: [" + token + "]");
 
-                    Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
-                    JWTVerifier verifier = JWT.require(algorithm).build();
-                    DecodedJWT jwt = verifier.verify(token);
-
-                    Map<String, Claim> claims = jwt.getClaims();
-                    Claim name = claims.get("name");
-                    Claim sub = claims.get("sub");
-
-                    User user = new User();
-                    user.setName(name.asString());
-                    user.setUserid(sub.asString());
+                    User user = getUserFromToken(token, this.jwtSecret);
 
                     request.setAttribute("user", user);
                     LOG.debug("user: " + user);
@@ -67,6 +58,22 @@ public class JwtCookieFilter implements Filter {
             }
         }
         chain.doFilter(request, res);
+    }
+
+    User getUserFromToken(String token, String secret) throws UnsupportedEncodingException {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT jwt = verifier.verify(token);
+
+        Map<String, Claim> claims = jwt.getClaims();
+        Claim name = claims.get("name");
+        Claim sub = claims.get("sub");
+
+        User user = new User();
+        user.setName(name.asString());
+        user.setUserid(sub.asString());
+
+        return user;
     }
 
     @Override
