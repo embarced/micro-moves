@@ -91,6 +91,20 @@ public class Game {
         return activeColour;
     }
 
+    public String getActivePlayer() {
+        String activePlayer = null;
+        switch (getActiveColour()) {
+            case 'w':
+                activePlayer = getPlayerWhite();
+                break;
+            case 'b':
+                activePlayer = getPlayerBlack();
+                break;
+        }
+        return activePlayer;
+    }
+
+
     /**
      * Set the active colour, black or white.
      *
