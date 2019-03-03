@@ -6,6 +6,7 @@ import org.flexess.games.domain.Move;
 import org.flexess.games.service.GameService;
 import org.flexess.games.service.IllegalMoveException;
 import org.flexess.games.rulesclient.MoveValidationNotPossibleException;
+import org.flexess.games.user.User;
 import org.flexess.games.websocket.WebSocketPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -147,13 +149,22 @@ public class GameRestController {
      * @param input move to perform
      */
     @RequestMapping(value = "/api/games/{id}/moves", method = RequestMethod.POST)
-    public ResponseEntity<String> createMove(
+    public ResponseEntity<String> createMove(@RequestAttribute(required = false) User user,
             @PathVariable("id") Long gameId,
             @RequestBody MoveDto input) {
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not logged in.");
+        }
 
         Game game = gameService.getGameById(gameId);
         if (game == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        String activePlayer = game.getActivePlayer();
+        if (!activePlayer.equals(user.getUserid())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User " + user.getUserid() + " is not active player.");
         }
 
         try {
