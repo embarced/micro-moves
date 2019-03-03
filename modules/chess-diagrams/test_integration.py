@@ -1,9 +1,11 @@
 import chess_diagrams
 
+
 # setup for all tests. See https://docs.pytest.org/en/2.7.3/xunit_setup.html
 #
 def setup_method(self, method):
     chess_diagrams.app.testing = True
+
 
 # Test for a single response. See http://flask.pocoo.org/docs/1.0/testing/
 #
