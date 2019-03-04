@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>Register a new Player</h1>
+{% endblock %}
+
+{% block content %}
+    <form role = "form" method="post">
+
+        <div class = "form-group">
+          <label for = "name"><span class="glyphicon glyphicon-user"></span> User ID</label>
+          <input type = "text" class = "form-control" id = "name" placeholder = "Enter user id" name="userid" value="{{ player.userid }}">
+        </div>
+
+        <div class = "form-group">
+          <label for = "name"><span class="glyphicon glyphicon-tag"></span> Name</label>
+          <input type = "text" class = "form-control" id = "name" placeholder = "Enter name" name="name" value="{{ player.name }}">
+        </div>
+
+        <button type = "submit" class = "btn btn-default">Submit</button>
+
+    </form>
+{% endblock %}

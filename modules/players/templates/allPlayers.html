@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>All players</h1>
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <table class = "table table-striped">
+           <thead>
+              <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+              </tr>
+           </thead>
+
+           <tbody>
+             {% for player in players %}
+              <tr>
+                  <td>{{ player.userid }}</td>
+                  <td>{{ player.name }}</td>
+              </tr>
+              {% endfor %}
+           </tbody>
+        </table>
+    </div>
+{% endblock %}

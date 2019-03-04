@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+    <title>FLEXess</title>
+</head>
+<body>
+
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">FLEXess</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/games/">Games</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="./">Players</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user == None %}
+                    <li><a href="register">Register</a></li>
+                    <li><a href="login">Login</a></li>
+                    {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ user.name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile_{{ user.userid }}">Profile {{ user.userid }}</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="logoff"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="header" class="container">
+        <div class="page-header">
+        {% block header %}
+        {% endblock %}
+        </div>
+    </div>
+
+    <div id="messages" class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{category}}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    </div>
+
+
+    <div id="content" class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>
