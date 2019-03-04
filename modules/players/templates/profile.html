@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>Profile</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if profile_user != None %}
+    <ul class="list-group">
+        <li class="list-group-item">
+            <span class="glyphicon glyphicon-user"></span> User ID: {{ profile_user.userid}}
+        </li>
+        <li class="list-group-item">
+            <span class="glyphicon glyphicon-tag"></span> Name: {{ profile_user.name}}
+        </li>
+    </ul>
+    {% endif %}
+
+{% endblock %}

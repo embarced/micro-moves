@@ -1,1 +1,20 @@
-Hallo
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>Players<small> A Micro Moves module</small></h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>About this Module</h2>
+        <p>
+            This module is implemented in Python with Flask.
+            See <a href="https://www.embarc.de/micro-moves/" target="_blank">Micro Moves</a> blog series for details.
+            It introduced this module in Part 7.
+        </p>
+    </div>
+
+    <div>
+        <a class = "btn btn-primary" role = "button" href="./allplayers">See all players</a>
+    </div>
+{% endblock %}
