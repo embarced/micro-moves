@@ -4,6 +4,8 @@ import tinydb
 import web_token
 
 app = flask.Flask(__name__)
+app.config['SECRET_KEY'] = 'Geheimnis123'
+
 
 db = tinydb.TinyDB('db.json')
 if len(db) == 0:
