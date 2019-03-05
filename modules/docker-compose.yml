@@ -9,12 +9,21 @@ services:
     depends_on:
       - "rules"
       - "messaging"
+    environment:
+      - JWT_COOKIE_NAME
+      - JWT_SECRET
+      - RABBITMQ_HOSTNAME=messaging
+      - RABBITMQ_USERNAME
+      - RABBITMQ_PASSWORD
 
   chess-diagrams:
     build: ./chess-diagrams/
 
   players:
       build: ./players/
+      environment:
+        - JWT_COOKIE_NAME
+        - JWT_SECRET
 
   play:
     build: ./play/
@@ -37,13 +46,17 @@ services:
     build: ./computer-player/
     depends_on:
       - "messaging"
+    environment:
+      - RABBITMQ_HOSTNAME=messaging
+      - RABBITMQ_USERNAME
+      - RABBITMQ_PASSWORD
 
   messaging:
     image: "rabbitmq:3-management"
     hostname: "rabbitmq"
     environment:
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     ports:
       - "15672:15672"
       - "5672:5672"
