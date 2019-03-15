@@ -27,8 +27,8 @@ def index():
 @app.route('/allplayers')
 def all_players():
     user = web_token.jwt_cookie_to_user()
-    all = db.all()
-    resp = flask.make_response(flask.render_template('allPlayers.html', players=all, user=user))
+    players = db.all()
+    resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=user))
     return resp
 
 @app.route('/login')
