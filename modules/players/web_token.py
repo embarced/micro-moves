@@ -7,18 +7,18 @@ JWT_SECRET = os.environ.get('JWT_SECRET')
 
 
 def user_to_jwt(user):
-    assert JWT_SECRET != None
+    assert JWT_SECRET is not None
     return user_and_secret_to_jwt(user, JWT_SECRET)
 
 
 def jwt_to_user(token):
-    assert JWT_SECRET != None
+    assert JWT_SECRET is not None
     return jwt_and_secret_to_user(token, JWT_SECRET)
 
 
 def jwt_cookie_to_user():
     flexess_jwt = flask.request.cookies.get(JWT_COOKIE_NAME)
-    if flexess_jwt == None:
+    if flexess_jwt is None:
         return None
     else:
         return jwt_to_user(flexess_jwt)
