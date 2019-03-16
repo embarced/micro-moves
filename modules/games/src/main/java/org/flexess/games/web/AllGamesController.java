@@ -15,9 +15,18 @@ import java.util.List;
 @Controller
 public class AllGamesController {
 
-    @Autowired
-    GameService gameService;
+    private GameService gameService;
 
+    public AllGamesController(@Autowired GameService gameService) {
+        this.gameService = gameService;
+    }
+
+    /**
+     * Lists all games.
+     *
+     * @param model  Spring Web MVC model for template
+     * @return template name
+     */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String home(ModelMap model) {
 

@@ -19,6 +19,13 @@ public class ViewGameController {
         this.gameService = gameService;
     }
 
+    /**
+     * View a single game by ID.
+     *
+     * @param model Spring Web MVC model for template
+     * @param id ID of the game
+     * @return template name
+     */
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(ModelMap model, @PathVariable("id") Long id) {
 
