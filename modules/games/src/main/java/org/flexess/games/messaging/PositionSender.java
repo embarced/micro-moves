@@ -1,8 +1,6 @@
 package org.flexess.games.messaging;
 
 import org.flexess.games.domain.Game;
-import org.flexess.games.rest.DtoFactory;
-import org.flexess.games.rest.GameDetailsDto;
 import org.json.JSONObject;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
