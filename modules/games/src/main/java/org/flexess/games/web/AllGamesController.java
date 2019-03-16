@@ -21,10 +21,7 @@ public class AllGamesController {
     @RequestMapping(value = "/games", method = RequestMethod.GET)
     public String home(ModelMap model) {
 
-        // List<Game> games = new ArrayList<>();
         Iterable<Game> allGames = gameService.getAllGames();
-        // allGames.forEach(games::add);
-
         model.addAttribute("games", allGames);
 
         return "all_games";
