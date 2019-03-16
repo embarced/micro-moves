@@ -1,22 +1,10 @@
 import flask
-import tinydb
 
 import web_token
+import db
 
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
-
-
-db = tinydb.TinyDB('db.json')
-if len(db) == 0:
-    db.insert({"userid": 'stefanz', "name": 'Stefan Zörner'})
-    db.insert({"userid": 'peter', "name": 'Peter Yarrow'})
-    db.insert({"userid": 'paul', "name": 'Noel Paul Stookey'})
-    db.insert({"userid": 'mary', "name": 'Mary Travers'})
-    db.insert({"userid": 'pinky', "name": 'Pinky'})
-    db.insert({"userid": 'brain', "name": 'The Brain'})
-    db.insert({"userid": 'stockfish', "name": 'Stockfish Engine'})
-
 
 @app.route('/')
 def index():
@@ -46,10 +34,7 @@ def login():
     user = form.get('user')
     password = form.get('password')
 
-    user_query = tinydb.Query()
-    result = db.search(user_query.userid == user)
-
-    print (result)
+    result = db.user_by_userid(user)
 
     # TODO: Check password
 
@@ -70,7 +55,6 @@ def login():
 def logoff():
     """ Logs the the user off. Therefore removes the JWT token"""
 
-
     flask.flash('Logged off.', category='info')
     resp = flask.make_response(flask.render_template('index.html', user=None))
     resp.set_cookie(web_token.JWT_COOKIE_NAME, '', expires=0)
@@ -81,8 +65,7 @@ def logoff():
 def profile(userid):
     auth_user = web_token.jwt_cookie_to_user()
 
-    user_query = tinydb.Query()
-    result = db.search(user_query.userid == userid)
+    result = db.user_by_userid(userid)
 
     profile_user = None
     if len(result) == 1:
@@ -117,14 +100,13 @@ def register():
         success = False
 
     if success:
-        user_query = tinydb.Query()
-        result = db.search(user_query.userid == userid)
+        result = db.user_by_userid(userid)
         if len(result) > 0:
             flask.flash('User ID not available.', category='warning')
             success = False
 
     if success:
-        db.insert(player)
+        db.create(player)
         flask.flash('Registration of ' + name + ' to FLEXess was successful.', category='success')
 
         encoded = web_token.user_to_jwt(player)
