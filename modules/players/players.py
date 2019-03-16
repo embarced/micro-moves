@@ -9,17 +9,19 @@ app.config['SECRET_KEY'] = 'Geheimnis123'
 
 db = tinydb.TinyDB('db.json')
 if len(db) == 0:
-    db.insert({'userid': 'stefanz', 'name': 'Stefan Zörner'})
-    db.insert({'userid': 'peter', 'name': 'Peter Yarrow'})
-    db.insert({'userid': 'paul', 'name': 'Noel Paul Stookey'})
-    db.insert({'userid': 'mary', 'name': 'Mary Travers'})
-    db.insert({'userid': 'pinky', 'name': 'Pinky'})
-    db.insert({'userid': 'brain', 'name': 'The Brain'})
-    db.insert({'userid': 'stockfish', 'name': 'Stockfish Engine'})
+    db.insert({"userid": 'stefanz', "name": 'Stefan Zörner'})
+    db.insert({"userid": 'peter', "name": 'Peter Yarrow'})
+    db.insert({"userid": 'paul', "name": 'Noel Paul Stookey'})
+    db.insert({"userid": 'mary', "name": 'Mary Travers'})
+    db.insert({"userid": 'pinky', "name": 'Pinky'})
+    db.insert({"userid": 'brain', "name": 'The Brain'})
+    db.insert({"userid": 'stockfish', "name": 'Stockfish Engine'})
 
 
 @app.route('/')
 def index():
+    """ Displays the index page of the players submodule. """
+
     user = web_token.jwt_cookie_to_user()
     return flask.render_template('index.html', user=user)
 
@@ -31,10 +33,12 @@ def all_players():
     resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=user))
     return resp
 
+
 @app.route('/login')
 def login_form():
     resp = flask.make_response(flask.render_template('login_form.html', user=None))
     return resp
+
 
 @app.route('/login', methods=["POST"])
 def login():
@@ -61,8 +65,12 @@ def login():
         resp = flask.make_response(flask.render_template('login_form.html', user=None), 401)
         return resp
 
+
 @app.route('/logoff')
 def logoff():
+    """ Logs the the user off. Therefore removes the JWT token"""
+
+
     flask.flash('Logged off.', category='info')
     resp = flask.make_response(flask.render_template('index.html', user=None))
     resp.set_cookie(web_token.JWT_COOKIE_NAME, '', expires=0)
