@@ -18,7 +18,7 @@ public class AllGamesController {
     @Autowired
     GameService gameService;
 
-    @RequestMapping(value = "/games", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public String home(ModelMap model) {
 
         Iterable<Game> allGames = gameService.getAllGames();
