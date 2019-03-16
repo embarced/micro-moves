@@ -18,4 +18,20 @@ public class GameTest {
         game.setActiveColour('b');
         Assert.assertEquals("mary", game.getActivePlayer());
     }
+
+    @Test
+    public void takingPart() {
+
+        Game game = new Game();
+        game.setPlayerWhite("paul");
+        game.setPlayerBlack("ringo");
+
+        Assert.assertTrue(game.isTakingPart("paul"));
+        Assert.assertTrue(game.isTakingPart("ringo"));
+
+        Assert.assertFalse(game.isTakingPart("peter"));
+        Assert.assertFalse(game.isTakingPart(null));
+
+    }
+
 }

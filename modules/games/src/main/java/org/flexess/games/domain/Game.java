@@ -104,6 +104,16 @@ public class Game {
         return activePlayer;
     }
 
+    /**
+     * Checks whether a given user takes part in this game.
+     *
+     * @param playerToTest user ID of the player to test
+     * @return true, if the player takes part in this game
+     */
+    public boolean isTakingPart(String playerToTest) {
+        return playerWhite.equals(playerToTest) || playerBlack.equals(playerToTest);
+    }
+
 
     /**
      * Set the active colour, black or white.
