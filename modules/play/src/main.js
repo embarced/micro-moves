@@ -42,9 +42,7 @@ new Vue({
                 return '';
             }
             else {
-                const user = getUserFromJWT(jwt_token)
-                console.log(user);
-                return user;
+                return getUserFromJWT(jwt_token);
             }
         },
         sendMove: async function () {
