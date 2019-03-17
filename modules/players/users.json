@@ -1,0 +1,28 @@
+{
+  "_default": {
+    "1": {
+      "userid": "pinky",
+      "name": "Pinky"
+    },
+    "2": {
+      "userid": "brain",
+      "name": "The Brain"
+    },
+    "3": {
+      "userid": "stockfish",
+      "name": "Stockfish Engine"
+    },
+    "4": {
+      "userid": "peter",
+      "name": "Peter Yarrow"
+    },
+    "5": {
+      "userid": "paul",
+      "name": "Noel Paul Stookey"
+    },
+    "6": {
+      "userid": "mary",
+      "name": "Mary Travers"
+    }
+  }
+}
