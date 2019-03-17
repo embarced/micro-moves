@@ -22,7 +22,7 @@ function getJWTfromCookie() {
 
 function getPayloadFromJWT(jwt_token) {
     let payloadDecoded = '';
-    if (jwt_token != null) {
+    if (jwt_token !== null) {
         const payloadEncoded = jwt_token.split('.')[1];
         payloadDecoded = atob(payloadEncoded);
     }
