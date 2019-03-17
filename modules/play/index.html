@@ -24,8 +24,18 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/players/register">Register</a></li>
-                    <li><a href="/players/login">Login</a></li>
+                    <li v-if="user == null"><a href="/players/register">Register</a></li>
+                    <li v-if="user == null"><a href="/players/login">Login</a></li>
+
+                    <li v-if="user != null" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">{{ user.name }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a :href="'/players/profile_' + user.sub">Profile {{ user.sub }}</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/players/logoff"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -112,8 +122,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
 
+
 <script src="./src/games.js"></script>
 <script src="./src/chess-diagrams.js"></script>
+<script src="./src/players.js"></script>
+
 <script src="./src/main.js"></script>
 
 </html>

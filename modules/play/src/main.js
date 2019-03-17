@@ -1,6 +1,7 @@
 const GAME_ID_REQUEST_PARAM = 'game_id';
 
 let data={
+    user: '',
     game: '',
     nextMove: '',
     message: {
@@ -13,9 +14,14 @@ new Vue({
     el: '#app',
     data: data,
     mounted: async function(){
+
+        const currentUser = this.currentUserFromCookie();
+        Vue.set(data, 'user', currentUser);
+
         const game_id = this.gameIdFromRequestParam();
         const currentGame = await restGetGame(game_id);
         Vue.set(data, 'game', currentGame);
+
         webSocketConnect(game_id);
     },
     methods: {
@@ -29,6 +35,17 @@ new Vue({
                 result = decodeURIComponent(name[1]);
             }
             return result;
+        },
+        currentUserFromCookie() {
+            const jwt_token = getJWTfromCookie();
+            if (jwt_token === '') {
+                return '';
+            }
+            else {
+                const user = getUserFromJWT(jwt_token)
+                console.log(user);
+                return user;
+            }
         },
         sendMove: async function () {
             try {

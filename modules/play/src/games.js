@@ -1,3 +1,6 @@
+// const REST_URL = 'http://' + "http://localhost:9000" + '/games-api/games';
+// const WEBSOCKET_URL = 'http://' + "http://localhost:9000" + '/games-websocket';
+
 const REST_URL = 'http://' + window.location.host + '/games-api/games';
 const WEBSOCKET_URL = 'http://' + window.location.host + '/games-websocket';
 

@@ -1,3 +1,5 @@
+// const DIAGRAM_URL = 'http://' + 'localhost:9000' +'/chess-diagrams/board.png';
+
 const DIAGRAM_URL = 'http://' + window.location.host +'/chess-diagrams/board.png';
 
 function diagramUrlForFen (fen) {
