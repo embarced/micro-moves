@@ -6,6 +6,7 @@ import db
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
 
+
 @app.route('/')
 def index():
     """ Displays the index page of the players submodule. """
@@ -17,7 +18,7 @@ def index():
 @app.route('/allplayers')
 def all_players():
     user = web_token.jwt_cookie_to_user()
-    players = db.all()
+    players = db.all_users()
     resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=user))
     return resp
 
@@ -80,6 +81,7 @@ def register_form():
     player = {}
     resp = flask.make_response(flask.render_template('register_form.html', user=None, player=player))
     return resp
+
 
 @app.route('/register', methods=["POST"])
 def register():
