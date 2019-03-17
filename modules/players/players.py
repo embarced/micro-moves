@@ -15,7 +15,7 @@ def index():
     return flask.render_template('index.html', user=user)
 
 
-@app.route('/allplayers')
+@app.route('/all')
 def all_players():
     user = web_token.jwt_cookie_to_user()
     players = db.all_users()
