@@ -3,6 +3,7 @@ FROM python:3.6
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+COPY users.json ./
 COPY players.py web_token.py db.py ./
 COPY templates ./templates/
 

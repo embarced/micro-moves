@@ -1,25 +1,17 @@
 import tinydb
 
-db = tinydb.TinyDB('users.json')
-
-if len(db) == 0:
-    db.insert({'userid': 'pinky', 'name': 'Pinky'})
-    db.insert({'userid': 'brain', 'name': 'The Brain'})
-    db.insert({'userid': 'stockfish', 'name': 'Stockfish Engine'})
-    db.insert({'userid': 'peter', 'name': 'Peter Yarrow'})
-    db.insert({'userid': 'paul', 'name': 'Noel Paul Stookey'})
-    db.insert({'userid': 'mary', 'name': 'Mary Travers'})
+database = tinydb.TinyDB('users.json')
 
 
 def all_users():
-    return db.all()
+    return database.all()
 
 
 def user_by_userid(userid):
     user_query = tinydb.Query()
-    result = db.search(user_query.userid == userid)
+    result = database.search(user_query.userid == userid)
     return result
 
 
 def create(user):
-    db.insert(user)
+    database.insert(user)

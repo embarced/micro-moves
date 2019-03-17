@@ -3,6 +3,7 @@ import flask
 import web_token
 import db
 
+
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
 
