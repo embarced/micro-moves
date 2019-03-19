@@ -1,7 +1,7 @@
 package org.flexess.games.rulesclient;
 
 import org.flexess.games.domain.Move;
-import org.flexess.games.service.Position;
+import org.flexess.games.domain.Position;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 

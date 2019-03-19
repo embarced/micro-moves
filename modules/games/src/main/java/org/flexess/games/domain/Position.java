@@ -1,4 +1,4 @@
-package org.flexess.games.service;
+package org.flexess.games.domain;
 
 import java.util.regex.Pattern;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  */
 public class Position {
 
-    static final String LINE_NAMES = "abcdefgh";
+    private static final String LINE_NAMES = "abcdefgh";
 
 
     private char board[][];

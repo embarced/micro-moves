@@ -1,5 +1,6 @@
-package org.flexess.games.service;
+package org.flexess.games.domain;
 
+import org.flexess.games.domain.Position;
 import org.junit.Assert;
 import org.junit.Test;
 

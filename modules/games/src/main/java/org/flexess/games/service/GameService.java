@@ -6,6 +6,7 @@ import org.flexess.games.domain.GameResult;
 import org.flexess.games.domain.GameStatus;
 import org.flexess.games.domain.Move;
 import org.flexess.games.domain.MoveRepository;
+import org.flexess.games.domain.Position;
 import org.flexess.games.messaging.PositionSender;
 import org.flexess.games.rulesclient.MoveValidationNotPossibleException;
 import org.flexess.games.rulesclient.RulesClient;
