@@ -25,6 +25,14 @@ public class RulesClient {
     private static final String HOSTNAME = "rules";
     private static final int PORT = 8081;
 
+    /**
+     * Validate a move for a given position.
+     *
+     * @param position position
+     * @param move move to test, whether valid according ro rules
+     *
+     * @return result data
+     */
     @HystrixCommand(fallbackMethod = "serviceNotAvailable")
     public ValidateMoveResult validateMove(Position position, Move move)  {
 
@@ -77,6 +85,9 @@ public class RulesClient {
         return validateMoveResult;
     }
 
+    /**
+     * Fallback method for Hystrix.
+     */
     public ValidateMoveResult serviceNotAvailable(Position position, Move move) {
 
         ValidateMoveResult result = new ValidateMoveResult();
