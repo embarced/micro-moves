@@ -12,14 +12,16 @@
               <tr>
                   <th>User ID</th>
                   <th>Name</th>
+                  <th>Roles</th>
               </tr>
            </thead>
 
            <tbody>
              {% for player in players %}
               <tr>
-                  <td>{{ player.userid }}</td>
+                  <td><a class="btn btn-link" role="button" href="profile_{{ player.userid }}">{{ player.userid }}</a></td>
                   <td>{{ player.name }}</td>
+                  <td>{{ player.roles }}</td>
               </tr>
               {% endfor %}
            </tbody>
