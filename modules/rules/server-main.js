@@ -38,7 +38,6 @@ app.get('/validateMove', function (req, res) {
     if (fen === undefined || move === undefined) {
         res.status(400).send('invalid call of /validateMove');
     }
-    console.log(fen, move);
 
     const pos = new domain.Position(fen);
     const moves = rules.ChessRules.getAllValidMoves(pos);
