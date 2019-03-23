@@ -90,7 +90,7 @@ def register():
     form = flask.request.form
     userid = form.get('userid')
     name = form.get('name')
-    player = { 'userid': userid, 'name': name}
+    player = { 'userid': userid, 'name': name, 'roles': 'user'}
 
     success = True
 
