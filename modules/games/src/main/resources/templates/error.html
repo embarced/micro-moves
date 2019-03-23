@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title>FLEXess</title>
+</head>
+<body>
+<div>
+
+    <div th:replace="fragments/navbar :: navbar" />
+
+    <div class = "container">
+
+        <div class="page-header">
+            <h1>Error<small> Something really bad happened here.</small></h1>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <td>Date</td>
+                    <td th:text="${timestamp}"></td>
+                </tr>
+                <tr>
+                    <td>Path</td>
+                    <td th:text="${path}"></td>
+                </tr>
+                <tr>
+                    <td>Error</td>
+                    <td th:text="${error}"></td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td th:text="${status}"></td>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                    <td th:text="${message}"></td>
+                </tr>
+                <td>
+                    <td>Exception</td>
+                    <td th:text="${exception}"></td>
+                </tr>
+                <tr>
+                    <td>Trace</td>
+                    <td>
+                        <pre th:text="${trace}"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+</body>
+</html>
