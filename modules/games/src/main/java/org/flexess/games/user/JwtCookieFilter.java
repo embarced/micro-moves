@@ -68,10 +68,18 @@ public class JwtCookieFilter implements Filter {
         Map<String, Claim> claims = jwt.getClaims();
         Claim name = claims.get("name");
         Claim sub = claims.get("sub");
+        Claim roles = claims.get("roles");
 
         User user = new User();
-        user.setName(name.asString());
-        user.setUserid(sub.asString());
+        if (name != null) {
+            user.setName(name.asString());
+        }
+        if (sub != null) {
+            user.setUserid(sub.asString());
+        }
+        if (roles != null) {
+            user.setRoles(roles.asString());
+        }
 
         return user;
     }
