@@ -1,28 +1,40 @@
 {
   "_default": {
     "1": {
-      "userid": "pinky",
-      "name": "Pinky"
+      "userid": "admin",
+      "name": "Administrator",
+      "roles": "user,admin"
     },
     "2": {
-      "userid": "brain",
-      "name": "The Brain"
-    },
-    "3": {
       "userid": "stockfish",
-      "name": "Stockfish Engine"
+      "name": "Stockfish Engine",
+      "roles": "engine"
+    },
+
+    "3": {
+      "userid": "pinky",
+      "name": "Pinky",
+      "roles": "user"
     },
     "4": {
-      "userid": "peter",
-      "name": "Peter Yarrow"
+      "userid": "brain",
+      "name": "The Brain",
+      "roles": "user"
     },
     "5": {
-      "userid": "paul",
-      "name": "Noel Paul Stookey"
+      "userid": "peter",
+      "name": "Peter Yarrow",
+      "roles": "user"
     },
     "6": {
+      "userid": "paul",
+      "name": "Noel Paul Stookey",
+      "roles": "user"
+    },
+    "7": {
       "userid": "mary",
-      "name": "Mary Travers"
+      "name": "Mary Travers",
+      "roles": "user"
     }
   }
 }
