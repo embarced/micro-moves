@@ -37,7 +37,7 @@ def jwt_cookie_to_user():
 def user_and_secret_to_jwt(user, secret):
     """ Converts a user object and a secret to a token. """
 
-    jwt_payload = {'sub': user['userid'], 'name': user['name'] }
+    jwt_payload = {'sub': user['userid'], 'name': user['name'], 'roles': user['roles'] }
     encoded = jwt.encode(jwt_payload, secret, algorithm='HS256')
     return encoded
 
@@ -49,6 +49,8 @@ def jwt_and_secret_to_user(token, secret):
     user = {}
     user['userid'] = decoded['sub']
     user['name'] = decoded['name']
+    user['roles'] = decoded['roles']
+
     return user
 
 
