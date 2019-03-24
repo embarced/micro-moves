@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -26,8 +27,8 @@ public class ViewGameController {
      * @param id ID of the game
      * @return template name
      */
-    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-    public String view(ModelMap model, @PathVariable("id") Long id) {
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String view(ModelMap model, @RequestParam("game_id") Long id) {
 
         Game game = gameService.getGameById(id);
         model.addAttribute("game", game);

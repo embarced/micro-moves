@@ -19,12 +19,12 @@ public class AllGamesController {
     }
 
     /**
-     * Lists all games.
+     * Lists all games. Acts as the homepage.
      *
      * @param model  Spring Web MVC model for template
      * @return template name
      */
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(ModelMap model) {
 
         Iterable<Game> allGames = gameService.getAllGames();
