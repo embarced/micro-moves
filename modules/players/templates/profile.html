@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <h1>Profile</h1>
+<h1>Profile
+    {% if profile_user != None %}
+    {{ profile_user.userid}}<small> {{profile_user.name}}</small>
+    {% endif %}
+</h1>
 {% endblock %}
 
 {% block content %}
@@ -9,13 +13,13 @@
     {% if profile_user != None %}
     <ul class="list-group">
         <li class="list-group-item">
-            <span class="glyphicon glyphicon-user"></span> User ID: {{ profile_user.userid}}
+            <span class="glyphicon glyphicon-user"></span> User ID: {{profile_user.userid}}
         </li>
         <li class="list-group-item">
-            <span class="glyphicon glyphicon-tag"></span> Name: {{ profile_user.name}}
+            <span class="glyphicon glyphicon-tag"></span> Name: {{profile_user.name}}
         </li>
         <li class="list-group-item">
-            <span class="glyphicon glyphicon-flag"></span> Roles: {{ profile_user.roles}}
+            <span class="glyphicon glyphicon-flag"></span> Roles: {{profile_user.roles}}
         </li>
     </ul>
     {% endif %}
