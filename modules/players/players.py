@@ -8,16 +8,18 @@ app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
 
 
-@app.route('/')
+@app.route('/about')
 def index():
-    """ Displays the index page of the players submodule. """
+    """ Displays the about page of the players submodule. """
 
     user = web_token.jwt_cookie_to_user()
-    return flask.render_template('index.html', user=user)
+    return flask.render_template('about.html', user=user)
 
 
-@app.route('/all')
+@app.route('/')
 def all_players():
+    """ Displays the index page of the players submodule which lists all players. """
+
     user = web_token.jwt_cookie_to_user()
     players = db.all_users()
     resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=user))
@@ -44,7 +46,8 @@ def login():
         player = result[0]
         flask.flash('Logged in to FLEXess.', category='info')
         encoded = web_token.user_to_jwt(player)
-        resp = flask.make_response(flask.render_template('index.html', user=player))
+        players = db.all_users()
+        resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=player))
         resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
         return resp
     else:
@@ -58,7 +61,8 @@ def logoff():
     """ Logs the the user off. Therefore removes the JWT token"""
 
     flask.flash('Logged off.', category='info')
-    resp = flask.make_response(flask.render_template('index.html', user=None))
+    players = db.all_users()
+    resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=None))
     resp.set_cookie(web_token.JWT_COOKIE_NAME, '', expires=0)
     return resp
 
@@ -113,7 +117,7 @@ def register():
         flask.flash('Registration of ' + name + ' to FLEXess was successful.', category='success')
 
         encoded = web_token.user_to_jwt(player)
-        resp = flask.make_response(flask.render_template('index.html', user=player))
+        resp = flask.make_response(flask.render_template('profile.html', user=player, profile_user=player))
         resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
 
     else:

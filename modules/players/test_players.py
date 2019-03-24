@@ -9,9 +9,9 @@ def setup_method(self, method):
 
 # Test for a single response. See http://flask.pocoo.org/docs/1.0/testing/
 #
-def test_index_page():
+def test_about_page():
     app = players.app.test_client()
-    response = app.get('/')
+    response = app.get('/about')
     assert response.status_code == 200
     assert b'<html>' in response.data
 
