@@ -24,7 +24,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li th:unless="${ user }"><a href="#">Register</a></li>
+                <li th:unless="${ user }"><a href="/players/register">Register</a></li>
                 <li th:unless="${ user }"><a href="/players/login">Login</a></li>
                 <li th:if="${ user }" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
