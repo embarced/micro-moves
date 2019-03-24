@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title>FLEXess</title>
+</head>
+<body>
+<div>
+    <div th:replace="fragments/navbar :: navbar" />
+
+    <div class = "container">
+
+        <div class="page-header">
+            <h1>Open a new game</h1>
+        </div>
+
+        <form action="#" th:action="@{./open_game}" method="post">
+
+            <div class="form-group">
+                <span class="glyphicon glyphicon-adjust"></span><span> Colour. You play ...</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="colour" id="colour1" value="white" checked>
+                    <label class="form-check-label" for="colour1">
+                        White (and begin the game)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="colour" id="colour2" value="black">
+                    <label class="form-check-label" for="colour2">
+                        Black
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="glyphicon glyphicon-user"></span><span> Opponent</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="opponent" id="opponent1" value="human" checked>
+                    <label class="form-check-label" for="opponent1">
+                        Human player
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="opponent" id="opponent2" value="computer">
+                    <label class="form-check-label" for="opponent2">
+                        Computer player
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Open game</button>
+                <a type="button" class="btn btn-default" href="./">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer" />
+</body>
+</html>

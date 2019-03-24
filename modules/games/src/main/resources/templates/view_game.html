@@ -21,10 +21,10 @@
                     <span class="glyphicon glyphicon-signal"></span><span th:text="' Game Status: '+${game.status}"></span>
                 </li>
                 <li class="list-group-item">
-                    <span class="glyphicon glyphicon-user"></span><span th:text="' Player White: '+${game.playerWhite}"></span>
+                    <span class="glyphicon glyphicon-user"></span> Player White: <span th:if="${game.playerWhite != null}" th:text="${game.playerWhite}"></span>
                 </li>
                 <li class="list-group-item">
-                    <span class="glyphicon glyphicon-user"></span><span th:text="' Player Black: '+${game.playerBlack}"></span>
+                    <span class="glyphicon glyphicon-user"></span> Player Black: <span th:if="${game.playerBlack != null}" th:text="${game.playerBlack}"></span>
                 </li>
                 <li class="list-group-item">
                     <span class="glyphicon glyphicon-th"></span><span th:text="' Position (FEN): '+${game.getPosition()}"></span>

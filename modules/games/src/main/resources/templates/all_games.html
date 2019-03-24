@@ -11,7 +11,7 @@
     <div class = "container">
 
         <div class="page-header">
-            <h1>All Games</h1>
+            <h1>Games<small> Opening, Watching, Playing</small></h1>
         </div>
 
         <div>
@@ -19,9 +19,9 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Player White</th>
-                    <th>Player Black</th>
-                    <th>Status</th>
+                    <th><span class="glyphicon glyphicon-user"></span> Player White</th>
+                    <th><span class="glyphicon glyphicon-user"></span> Player Black</th>
+                    <th><span class="glyphicon glyphicon-signal"></span> Status</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -34,11 +34,12 @@
                     <div th:switch="${game.status}">
 
                         <td th:case="${T(org.flexess.games.domain.GameStatus).ENDED}">
-                            <a class = "btn btn-default" role = "button" th:href="'view/'+${game.id}">View game</a>
+                            <a class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
                         </td>
 
                         <td th:case="${T(org.flexess.games.domain.GameStatus).OPEN}">
-                            <a class = "btn btn-default" role = "button">Enter game</a>
+                            <a th:if="${user == null}" class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
+                            <a th:if="${user != null}" class = "btn btn-default" role = "button" th:href="'enter?game_id='+${game.id}">Enter game</a>
                         </td>
 
                         <td th:case="${T(org.flexess.games.domain.GameStatus).RUNNING}">
@@ -54,7 +55,8 @@
         </div>
 
         <div>
-            <a class="btn btn-default" href="./new_game" role="button">Create a new Game</a>
+            <a th:if="${user != null && user.hasRole('user')}" class="btn btn-default" href="./open_game" role="button">Open a new Game</a>
+            <a th:if="${user != null && user.hasRole('admin')}" class="btn btn-danger" href="./new_game" role="button">Create Game (admin)</a>
         </div>
 
     </div>

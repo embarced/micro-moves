@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title>FLEXess</title>
+</head>
+<body>
+<div>
+    <div th:replace="fragments/navbar :: navbar" />
+
+    <div class = "container">
+
+        <div class="page-header">
+            <h1>Successfully entered Game<small th:text="' ID = '+${game.id}"> ID = X</small></h1>
+        </div>
+
+        <ul class="list-group">
+            <li class="list-group-item" th:text="'Game ID: '+${game.id}">ID</li>
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-user"></span> Player White: <span th:if="${game.playerWhite != null}" th:text="${game.playerWhite}"></span>
+            </li>
+            <li class="list-group-item">
+                <span class="glyphicon glyphicon-user"></span> Player Black: <span th:if="${game.playerBlack != null}" th:text="${game.playerBlack}"></span>
+            </li>
+        </ul>
+
+        <div>
+            <a class="btn btn-primary" th:href="'/play/?game_id='+${game.id}" role="button">Play Game!</a>
+            <a class="btn btn-default" href="./all" role="button">To All Games list</a>
+        </div>
+
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer" />
+</body>
+</html>
