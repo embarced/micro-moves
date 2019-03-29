@@ -41,7 +41,7 @@ def login():
     player = db.user_by_userid(user)
     # TODO: Check password
 
-    if player != None:
+    if player is not None:
         flask.flash('Logged in to FLEXess.', category='info')
         encoded = web_token.user_to_jwt(player)
         players = db.all_users()
@@ -102,7 +102,7 @@ def register():
 
     if success:
         result = db.user_by_userid(userid)
-        if result != None :
+        if result is not None :
             flask.flash('User ID not available.', category='warning')
             success = False
 
