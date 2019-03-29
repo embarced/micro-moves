@@ -38,12 +38,10 @@ def login():
     user = form.get('user')
     password = form.get('password')
 
-    result = db.user_by_userid(user)
-
+    player = db.user_by_userid(user)
     # TODO: Check password
 
-    if len(result) == 1:
-        player = result[0]
+    if player != None:
         flask.flash('Logged in to FLEXess.', category='info')
         encoded = web_token.user_to_jwt(player)
         players = db.all_users()
@@ -71,11 +69,7 @@ def logoff():
 def profile(userid):
     auth_user = web_token.jwt_cookie_to_user()
 
-    result = db.user_by_userid(userid)
-
-    profile_user = None
-    if len(result) == 1:
-        profile_user = result[0]
+    profile_user = db.user_by_userid(userid)
 
     resp = flask.make_response(flask.render_template('profile.html', user=auth_user, profile_user=profile_user))
     return resp
@@ -108,7 +102,7 @@ def register():
 
     if success:
         result = db.user_by_userid(userid)
-        if len(result) > 0:
+        if result != None :
             flask.flash('User ID not available.', category='warning')
             success = False
 

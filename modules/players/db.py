@@ -8,9 +8,15 @@ def all_users():
 
 
 def user_by_userid(userid):
+    "Finds a user by its user id. Returns None, if it not exists."
+
     user_query = tinydb.Query()
+    user = None
     result = database.search(user_query.userid == userid)
-    return result
+    if len(result) == 1:
+        user = result[0]
+
+    return user
 
 
 def create(user):
