@@ -8,4 +8,5 @@ COPY templates ./templates/
 COPY images ./images/
 COPY fonts ./fonts/
 
+EXPOSE 8000
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "4", "chess_diagrams:app"]
