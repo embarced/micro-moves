@@ -4,11 +4,13 @@ database = tinydb.TinyDB('users.json')
 
 
 def all_users():
+    """ returns all users. """
+
     return database.all()
 
 
 def user_by_userid(userid):
-    "Finds a user by its user id. Returns None, if it not exists."
+    """ Finds a user by its user id. Returns None, if it not exists. """
 
     user_query = tinydb.Query()
     user = None
@@ -19,5 +21,7 @@ def user_by_userid(userid):
     return user
 
 
-def create(user):
+def create_user(user):
+    """ Add a new user. """
+
     database.insert(user)

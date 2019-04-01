@@ -107,7 +107,7 @@ def register():
             success = False
 
     if success:
-        db.create(player)
+        db.create_user(player)
         flask.flash('Registration of ' + name + ' to FLEXess was successful.', category='success')
 
         encoded = web_token.user_to_jwt(player)
