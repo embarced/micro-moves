@@ -63,7 +63,7 @@ new Vue({
             const fieldName = fieldNameFromCoords(event.offsetX, event.offsetY, boardWidth);
             if (this.nextMove.length <= 2) {
                 this.nextMove = this.nextMove + fieldName;
-            } else if (this.nextMove.length == 4) {
+            } else if (this.nextMove.length === 4) {
                 this.nextMove = fieldName;
             }
         }
