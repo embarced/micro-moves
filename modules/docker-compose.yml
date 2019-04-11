@@ -1,6 +1,13 @@
 version: '3'
 services:
 
+  homepage:
+    build: ./homepage/
+    environment:
+      - JWT_COOKIE_NAME
+      - JWT_SECRET
+
+
   rules:
     build: ./rules/
 
