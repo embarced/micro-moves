@@ -4,43 +4,12 @@
     <title>FLEXess</title>
 </head>
 <body>
-<div th:fragment="navbar" class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">FLEXess</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/games/">Games</a></li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li><a href="/players/">Players</a></li>
-            </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li th:unless="${ user }"><a href="/players/register">Register</a></li>
-                <li th:unless="${ user }"><a href="/players/login">Login</a></li>
-                <li th:if="${ user }" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false"><span th:remove="tag" th:text="${user.name}">Max Mayer</span> <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="'/players/profile_'+${user.userid}" th:text="'Profile '+${user.userid}">Profile mmy</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/players/logoff"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
-                    </ul>
-                </li>
-            </ul>
+<th:block th:fragment="navbar">
 
-        </div>
+    <!--# include virtual="/navbar?active=games" -->
 
-    </div>
-</div>
+</th:block>
+
 </body>
 </html>
