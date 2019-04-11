@@ -1,0 +1,12 @@
+# Prevent Apache from serving .ht* files:
+<FilesMatch "^\.ht">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Remove the .php extension from PHP files
+# See https://alexcican.com/post/how-to-remove-php-html-htm-extensions-with-htaccess/
+#
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
