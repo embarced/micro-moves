@@ -1,6 +1,9 @@
 <?php
-if(isset($_GET["module"])) $ABOUT_LINK = "/" . $_GET["module"] . "/about.html";
-else $ABOUT_LINK = "/about.html";
+if(isset($_GET["module"])) {
+    $ABOUT_LINK = "/" . $_GET["module"] . "/about.html";
+} else {
+    $ABOUT_LINK = "/about.html";
+}
 ?>
 <hr>
 <div class="row">
