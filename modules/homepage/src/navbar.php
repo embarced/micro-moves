@@ -18,8 +18,11 @@ if(isset($_COOKIE[$jwtCookieName])) {
     }
 }
 
-if(isset($_GET["active"])) $active = $_GET["active"];
-else $active = "";
+if(isset($_GET["active"])) {
+    $active = $_GET["active"];
+} else {
+    $active = "";
+}
 
 ?>
 <div class="navbar navbar-inverse" role="navigation">
