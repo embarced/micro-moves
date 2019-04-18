@@ -5,15 +5,17 @@ use \Firebase\JWT\JWT;
 $jwtCookieName = getenv('JWT_COOKIE_NAME');
 $jwtSecret = getenv('JWT_SECRET');
 
+$isLogedIn = false;
 if(isset($_COOKIE[$jwtCookieName])) {
     $jwt = $_COOKIE[$jwtCookieName];
-    $decoded = JWT::decode($jwt, $jwtSecret, array('HS256'));
-    $decoded_array = (array)$decoded;
-    $userid = $decoded_array['sub'];
-    $name = $decoded_array['name'];
-    $isLogedIn = true;
-} else {
-    $isLogedIn = false;
+    try {
+        $decoded = JWT::decode($jwt, $jwtSecret, array('HS256'));
+        $decoded_array = (array)$decoded;
+        $userid = $decoded_array['sub'];
+        $name = $decoded_array['name'];
+        $isLogedIn = true;
+    } catch (Exception $e) {
+    }
 }
 
 if(isset($_GET["active"])) $active = $_GET["active"];
