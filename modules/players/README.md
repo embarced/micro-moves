@@ -20,3 +20,4 @@ Manages players and authenticates them.
 * TinyDB - tiny, document oriented database, https://tinydb.readthedocs.io
 * tox - automate and standardize testing in Python, https://tox.readthedocs.io/en/latest/
 * Testing Flask applications, http://flask.pocoo.org/docs/1.0/testing/
+* PyJWT - encode and decode JSON Web Tokens, https://pyjwt.readthedocs.io/en/latest/
