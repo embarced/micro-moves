@@ -73,13 +73,11 @@ def logoff():
     """ Logs the the user off. Therefore removes the JWT token"""
 
     flask.flash('Logged off.', category='info')
-    # players = db.all_users()
-    # resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=None))
 
     url = redirect_uri()
     resp = flask.redirect(url, 302)
-
     resp.set_cookie(web_token.JWT_COOKIE_NAME, '', expires=0)
+
     return resp
 
 
