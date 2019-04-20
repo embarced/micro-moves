@@ -7,8 +7,17 @@ import db
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
 
+def redirect_uri():
+    proto = flask.request.headers['X-FLEXess-Proto']
+    host = flask.request.headers['X-FLEXess-Host']
+    uri = flask.request.headers['X-FLEXess-Uri']
 
-@app.route('/about')
+    token = uri.split('/')
+    url = proto + "://" + host + "/" + token[1] + "/"
+    return url
+
+
+@app.route('/about.html')
 def index():
     """ Displays the about page of the players submodule. """
 
@@ -43,9 +52,14 @@ def login():
 
     if player is not None:
         flask.flash('Logged in to FLEXess.', category='info')
+
+        # players = db.all_users()
+        # resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=player))
+
+        url = redirect_uri()
+        resp = flask.redirect(url, 302)
+
         encoded = web_token.user_to_jwt(player)
-        players = db.all_users()
-        resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=player))
         resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
         return resp
     else:
@@ -59,8 +73,12 @@ def logoff():
     """ Logs the the user off. Therefore removes the JWT token"""
 
     flask.flash('Logged off.', category='info')
-    players = db.all_users()
-    resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=None))
+    # players = db.all_users()
+    # resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=None))
+
+    url = redirect_uri()
+    resp = flask.redirect(url, 302)
+
     resp.set_cookie(web_token.JWT_COOKIE_NAME, '', expires=0)
     return resp
 
