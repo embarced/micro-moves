@@ -1,11 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head">
-    <title>FLEXess</title>
-</head>
+<!--# include virtual="/header" -->
 <body>
-<div>
-    <div th:replace="fragments/navbar :: navbar" />
+    <!--# include virtual="/navbar?active=games" -->
 
     <div class = "container">
 
@@ -42,6 +39,6 @@
 
     </div>
 
-    <div th:replace="fragments/footer :: footer" />
+    <!--# include virtual="/footer?module=games" -->
 </body>
 </html>

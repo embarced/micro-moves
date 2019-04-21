@@ -1,67 +1,64 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head">
-    <title>FLEXess</title>
-</head>
+<!--# include virtual="/header" -->
 <body>
-<div>
+    <!--# include virtual="/navbar?active=games" -->
 
-<div th:replace="fragments/navbar :: navbar" />
+    <div class = "container">
 
-<div class = "container">
+        <div class="page-header">
+            <h1>Games<small> Opening, Watching, Playing</small></h1>
+        </div>
 
-    <div class="page-header">
-        <h1>Games<small> Opening, Watching, Playing</small></h1>
+        <div>
+            <table class = "table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th><span class="glyphicon glyphicon-user"></span> Player White</th>
+                    <th><span class="glyphicon glyphicon-user"></span> Player Black</th>
+                    <th><span class="glyphicon glyphicon-signal"></span> Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="game : ${games}">
+                    <td th:text="${game.id}">4711</td>
+                    <td th:text="${game.playerWhite}">Peter</td>
+                    <td th:text="${game.playerBlack}">Paul</td>
+                    <td th:text="${game.status}">STATUS</td>
+                    <div th:switch="${game.status}">
+
+                        <td th:case="${T(org.flexess.games.domain.GameStatus).ENDED}">
+                            <a class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
+                        </td>
+
+                        <td th:case="${T(org.flexess.games.domain.GameStatus).OPEN}">
+                            <a th:if="${user == null}" class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
+                            <a th:if="${user != null}" class = "btn btn-default" role = "button" th:href="'enter?game_id='+${game.id}">Enter game</a>
+                        </td>
+
+                        <td th:case="${T(org.flexess.games.domain.GameStatus).RUNNING}">
+                            <a th:if="${user != null && game.isTakingPart(user.userid)}" class = "btn btn-primary" role = "button" th:href="'/play/?game_id='+${game.id}">Play Game!</a>
+                            <a th:if="${user == null || not game.isTakingPart(user.userid)}" class = "btn btn-default" role = "button" th:href="'/play/?game_id='+${game.id}">Kibitz Game.</a>
+                        </td>
+
+                    </div>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <a th:if="${user != null && user.hasRole('user')}" class="btn btn-default" href="./open_game" role="button">Open a new Game</a>
+            <a th:if="${user != null && user.hasRole('admin')}" class="btn btn-danger" href="./new_game" role="button">Create Game (admin)</a>
+        </div>
+
     </div>
 
-    <div>
-        <table class = "table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th><span class="glyphicon glyphicon-user"></span> Player White</th>
-                <th><span class="glyphicon glyphicon-user"></span> Player Black</th>
-                <th><span class="glyphicon glyphicon-signal"></span> Status</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="game : ${games}">
-                <td th:text="${game.id}">4711</td>
-                <td th:text="${game.playerWhite}">Peter</td>
-                <td th:text="${game.playerBlack}">Paul</td>
-                <td th:text="${game.status}">STATUS</td>
-                <div th:switch="${game.status}">
-
-                    <td th:case="${T(org.flexess.games.domain.GameStatus).ENDED}">
-                        <a class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
-                    </td>
-
-                    <td th:case="${T(org.flexess.games.domain.GameStatus).OPEN}">
-                        <a th:if="${user == null}" class = "btn btn-default" role = "button" th:href="'view?game_id='+${game.id}">View game</a>
-                        <a th:if="${user != null}" class = "btn btn-default" role = "button" th:href="'enter?game_id='+${game.id}">Enter game</a>
-                    </td>
-
-                    <td th:case="${T(org.flexess.games.domain.GameStatus).RUNNING}">
-                        <a th:if="${user != null && game.isTakingPart(user.userid)}" class = "btn btn-primary" role = "button" th:href="'/play/?game_id='+${game.id}">Play Game!</a>
-                        <a th:if="${user == null || not game.isTakingPart(user.userid)}" class = "btn btn-default" role = "button" th:href="'/play/?game_id='+${game.id}">Kibitz Game.</a>
-                    </td>
-
-                </div>
-
-            </tr>
-            </tbody>
-        </table>
     </div>
 
-    <div>
-        <a th:if="${user != null && user.hasRole('user')}" class="btn btn-default" href="./open_game" role="button">Open a new Game</a>
-        <a th:if="${user != null && user.hasRole('admin')}" class="btn btn-danger" href="./new_game" role="button">Create Game (admin)</a>
-    </div>
-
-</div>
-
-</div>
-<div th:replace="fragments/footer :: footer" />
+    <!--# include virtual="/footer?module=games" -->
 </body>
 </html>
