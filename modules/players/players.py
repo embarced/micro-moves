@@ -53,9 +53,6 @@ def login():
     if player is not None:
         flask.flash('Logged in to FLEXess.', category='info')
 
-        # players = db.all_users()
-        # resp = flask.make_response(flask.render_template('allPlayers.html', players=players, user=player))
-
         url = redirect_uri()
         resp = flask.redirect(url, 302)
 
@@ -127,7 +124,8 @@ def register():
         flask.flash('Registration of ' + name + ' to FLEXess was successful.', category='success')
 
         encoded = web_token.user_to_jwt(player)
-        resp = flask.make_response(flask.render_template('profile.html', user=player, profile_user=player))
+        url = redirect_uri()
+        resp = flask.redirect(url, 302)
         resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
 
     else:
