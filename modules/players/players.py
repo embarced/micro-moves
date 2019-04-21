@@ -8,9 +8,18 @@ app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = 'Geheimnis123'
 
 def redirect_uri():
-    proto = flask.request.headers['X-FLEXess-Proto']
-    host = flask.request.headers['X-FLEXess-Host']
-    uri = flask.request.headers['X-FLEXess-Uri']
+
+    proto = 'http'
+    if flask.request.headers.has_key('X-FLEXess-Proto'):
+        proto = flask.request.headers['X-FLEXess-Proto']
+
+    host = '0.0.0.0'
+    if flask.request.headers.has_key('X-FLEXess-Host'):
+        host = flask.request.headers['X-FLEXess-Host']
+
+    uri = '/players/'
+    if flask.request.headers.has_key('X-FLEXess-Uri'):
+        uri = flask.request.headers['X-FLEXess-Uri']
 
     token = uri.split('/')
     url = proto + "://" + host + "/" + token[1] + "/"
