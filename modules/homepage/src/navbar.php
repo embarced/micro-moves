@@ -18,10 +18,9 @@ if(isset($_COOKIE[$jwtCookieName])) {
     }
 }
 
+$active = "";
 if(isset($_GET["active"])) {
     $active = $_GET["active"];
-} else {
-    $active = "";
 }
 
 ?>
@@ -34,7 +33,7 @@ if(isset($_GET["active"])) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">FLEXess</a>
+            <a class="navbar-brand" href="/"><span class="active">FLEXess</span></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
