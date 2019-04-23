@@ -66,7 +66,7 @@ def login():
         resp = flask.redirect(url, 302)
 
         encoded = web_token.user_to_jwt(player)
-        resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
+        resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded, httponly=True)
         return resp
     else:
         flask.flash('Login failed.', category='danger')
@@ -135,7 +135,7 @@ def register():
         encoded = web_token.user_to_jwt(player)
         url = redirect_uri()
         resp = flask.redirect(url, 302)
-        resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded)
+        resp.set_cookie(web_token.JWT_COOKIE_NAME, encoded, httponly=True)
 
     else:
         resp = flask.make_response(flask.render_template('register_form.html', user=None, player=player))
