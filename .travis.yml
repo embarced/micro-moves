@@ -2,4 +2,4 @@ services:
   - docker
 
 script:
-  - cd modules; docker-compose up
+  - cd modules; docker-compose build
