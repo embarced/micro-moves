@@ -12,6 +12,10 @@ app.get('/', function(req, res){
     res.sendFile('index.html', { root: __dirname + "/static-html"} );
 });
 
+app.get('/health', function (req, res) {
+    res.send('OK');
+});
+
 app.get('/allValidMoves', function (req, res) {
 
     let fen = req.query.fen;
