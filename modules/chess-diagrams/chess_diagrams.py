@@ -2,8 +2,10 @@ import io
 import flask
 
 import draw
+from prometheus_flask_exporter.multiprocess import GunicornPrometheusMetrics
 
 app = flask.Flask(__name__)
+metrics = GunicornPrometheusMetrics(app)
 
 
 @app.route('/')
