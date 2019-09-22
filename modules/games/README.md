@@ -12,4 +12,6 @@ Manages games between players, stores their moves.
 (runs the Spring Boot WebApp on Port 8080)
 
 ## Resources
-* ...
+* Spring Boot, https://projects.spring.io/spring-boot/
+* Jackson Annotation Examples, http://www.baeldung.com/jackson-annotations
+* Postman - an API Development Environment, https://www.getpostman.com
