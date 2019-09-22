@@ -25,6 +25,8 @@ services:
 
   chess-diagrams:
     build: ./chess-diagrams/
+    environment:
+      - prometheus_multiproc_dir=.
 
   players:
       build: ./players/
@@ -69,3 +71,30 @@ services:
       - "5672:5672"
     labels:
       NAME: "rabbitmq"
+
+  prometheus:
+    image: "quay.io/prometheus/prometheus:v2.0.0"
+    volumes:
+     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+    ports:
+     - 9090:9090
+
+  grafana:
+    image: "grafana/grafana:5.0.0"
+    ports:
+     - 3000:3000
+
+
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+
+  nginx-exporter:
+    image: "nginx/nginx-prometheus-exporter:0.3.0"
+    command: "-nginx.scrape-uri http://reverse-proxy:80/internal/basic_status"
+
