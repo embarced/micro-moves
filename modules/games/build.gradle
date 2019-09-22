@@ -50,6 +50,9 @@ dependencies {
     // JWT
     compile("com.auth0:java-jwt:3.3.0")
 
+    // Monitoring via Prometheus
+    compile("io.micrometer:micrometer-registry-prometheus")
+
     testCompile("junit:junit")
 }
 
