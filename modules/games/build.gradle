@@ -37,7 +37,7 @@ dependencies {
     // See https://spring.io/guides/gs/messaging-stomp-websocket/
     //
     compile("org.springframework.boot:spring-boot-starter-websocket")
-    compile("org.webjars:sockjs-client:1.0.2")
+    compile("org.webjars:sockjs-client:1.1.2")
     compile("org.webjars:stomp-websocket:2.3.3")
 
     // Hystrix
