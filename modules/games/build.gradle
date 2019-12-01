@@ -58,7 +58,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Finchley.RC1"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE"
     }
 }
 repositories {
