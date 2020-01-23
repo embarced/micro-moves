@@ -49,9 +49,3 @@ dependencies {
 
     testCompile 'junit:junit'
 }
-
-repositories {
-    maven {
-        url 'https://repo.spring.io/libs-milestone'
-    }
-}
