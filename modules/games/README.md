@@ -3,7 +3,7 @@ Manages games between players, stores their moves.
 
 ## Technologies used
 * Java 8
-* Spring Boot 2.0 (Spring Web MVC, Spring Data ...)
+* Spring Boot 2.2 (Spring Web MVC, Spring Data ...)
 * Thymeleaf
 
 ## Starting the Service standalone
