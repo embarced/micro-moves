@@ -43,7 +43,7 @@ public class Move {
         if (text == null || text.length() == 0) {
             throw new IllegalArgumentException("Given move is null.");
         }
-        Pattern pattern = Pattern.compile("[a-h][1-8][a-h][1-8][qknr]?");
+        Pattern pattern = Pattern.compile("[a-h][1-8][a-h][1-8][qkbr]?");
         if (pattern.matcher(text).matches()) {
         this.text = text;} else {
             throw new IllegalArgumentException(text + " is not a valid move. Use 'e2e4' format.");
@@ -94,6 +94,12 @@ public class Move {
      */
     public String getTo() {
         return text.substring(2, 4);
+    }
+
+    public String getPromotion() {
+        if (text.length() == 5) {
+            return text.substring(4, 5);
+        } else return "";
     }
 
     @Override
