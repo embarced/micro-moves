@@ -1,4 +1,4 @@
-FROM openjdk:8 AS GAMES_BUILD_IMAGE
+FROM openjdk:11 AS GAMES_BUILD_IMAGE
 
 ENV APP_HOME=/root/dev/games/
 COPY gradle $APP_HOME/gradle
@@ -9,7 +9,7 @@ WORKDIR $APP_HOME
 COPY src $APP_HOME/src
 RUN ./gradlew --no-daemon build
 
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 WORKDIR /root/
 COPY --from=GAMES_BUILD_IMAGE /root/dev/games/build/libs/games.jar .
 EXPOSE 8080
