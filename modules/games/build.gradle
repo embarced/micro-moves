@@ -51,7 +51,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     // JWT
-    implementation 'com.auth0:java-jwt:3.9.0'
+    implementation 'com.auth0:java-jwt:3.17.0'
 
     testCompile 'junit:junit'
 }
